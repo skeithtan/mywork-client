@@ -1,5 +1,6 @@
 import React from "react";
 import {SignUpPage} from "../PageViews/SignUpPage";
+import {SignInPage} from "../PageViews/SignInPage";
 
 
 export function App() {
@@ -11,7 +12,7 @@ export function App() {
 
     return (
         <div>
-            <SignUpPage/>
+            <SignInPage/>
             {/*<DeliverableListItem deliverable={deliverable}/>*/}
         </div>
     );

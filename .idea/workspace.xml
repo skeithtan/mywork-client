@@ -2,25 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="737314df-9ce8-4324-9e83-bc37fc905d93" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Components/DeliverableListItem/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Components/DeliverableListItem/styles.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Components/SignUpCard/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Components/SignUpCard/styles.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PageViews/SignUpPage/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PageViews/SignUpPage/styles.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App/styles.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MyNavBar/navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyNavBar/navbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SignInCard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/SignInCard/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SignInCard/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/SignInCard/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SignInPage/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/PageViews/SignInPage/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SignInPage/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/PageViews/SignInPage/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SignUpCard/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SignUpCard/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +93,7 @@
       <option name="presentableId" value="Default" />
       <updated>1613934535689</updated>
       <workItem from="1613934539299" duration="1798000" />
-      <workItem from="1613980150385" duration="29335000" />
+      <workItem from="1613980150385" duration="29754000" />
     </task>
     <servers />
   </component>
