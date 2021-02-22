@@ -1,13 +1,18 @@
 import React from "react";
-import './styles.css';
-import {SignInPage} from "../SignInPage";
-import {SignUpCard} from "../SignUpCard";
+import {SignUpPage} from "../PageViews/SignUpPage";
 
 
 export function App() {
+    const deliverable = {
+        name: "Finish the abstraction from Hibernate to MCQChoiceJPADAO",
+        course: "Advanced Java Programming",
+        deadline: "Due 3 mars 2020, 12h00"
+    };
+
     return (
-        <div className="App">
-            <SignUpCard></SignUpCard>
+        <div>
+            <SignUpPage/>
+            {/*<DeliverableListItem deliverable={deliverable}/>*/}
         </div>
     );
 }

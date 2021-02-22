@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState} from 'react';
 import {useStyles} from "./styles";
 
 import {Card, CardActions, CardContent, Grid, TextField, Typography} from "@material-ui/core";
@@ -14,7 +14,11 @@ export function SignInCard() {
             <CardContent>
                 <Grid container spacing={2} direction="column" alignItems="stretch">
                     <Grid item>
-                        <Typography variant="h5" component="h1" align="left">
+                        <Typography
+                            variant="h5"
+                            component="h1"
+                            align="left"
+                        >
                             Sign in to MyWork
                         </Typography>
                     </Grid>
@@ -37,9 +41,11 @@ export function SignInCard() {
                         />
                     </Grid>
                     <Grid item>
-                        <Button className={fullWidth} size="medium" variant="contained" onClick={() => {
-                            alert(emailAddress + password)
-                        }}>Sign In</Button>
+                        <Button className={fullWidth} size="medium" variant="contained"
+                                color="primary"
+                                onClick={() => {
+                                    alert(emailAddress + password)
+                                }}>Sign In</Button>
                     </Grid>
                     <Grid item>
                         <Button className={fullWidth} size="small" variant="text">
