@@ -17,7 +17,7 @@ import {useStyles} from "./styles";
 
 const options = ['Dashboard', 'Deliverables'];
 
-export function MyNavBar() {
+export function NavBar() {
     const {container, title, navText} = useStyles();
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useStyles} from "./styles";
 
-import {Card, CardActions, CardContent, Grid, TextField, Typography} from "@material-ui/core";
+import {Card, CardContent, Grid, TextField, Typography} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 
 export function SignInCard() {
@@ -12,7 +12,7 @@ export function SignInCard() {
     return (
         <Card className={root}>
             <CardContent>
-                <Grid container spacing={2} direction="column" alignItems="stretch">
+                <Grid container spacing={3} direction="column" alignItems="stretch">
                     <Grid item>
                         <Typography
                             variant="h5"
