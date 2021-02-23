@@ -85,6 +85,7 @@ function SignInCardComponent({token, setToken, setProfile}) {
                             onChange={e => setEmailAddress(e.target.value)}
                             type="email"
                             className={fullWidth}
+                            disabled={isLoading}
                         />
                     </Grid>
                     <Grid item>
@@ -94,11 +95,15 @@ function SignInCardComponent({token, setToken, setProfile}) {
                             onChange={e => setPassword(e.target.value)}
                             type="password"
                             className={fullWidth}
+                            disabled={isLoading}
                         />
                     </Grid>
                     <Grid item>
-                        <Button className={fullWidth} size="medium" variant="contained"
+                        <Button className={fullWidth}
+                                size="medium"
+                                variant="contained"
                                 color="primary"
+                                disabled={isLoading}
                                 onClick={onSignInClick}>
                             Sign in
                         </Button>
