@@ -1,7 +1,6 @@
 import {SignInPage, DeliverablePage} from "../../pages";
-import {SET_ACTIVE_PAGE, SIGN_OUT, SIGN_IN} from "../actions/app";
-
-const LOCALSTORAGE_TOKEN_KEY = "token";
+import {SET_ACTIVE_PAGE, SIGN_OUT, SET_PROFILE, SET_TOKEN} from "../actions/app";
+import {LOCALSTORAGE_TOKEN_KEY} from "../../services/axios";
 
 const defaultAppState = {
     ActivePage: SignInPage,
@@ -33,14 +32,19 @@ export function appStateReducer(state = defaultAppState, action) {
                 token: null,
                 profile: undefined
             };
-        case SIGN_IN:
-            const {token, profile} = action.payload;
-            localStorage.setItem(LOCALSTORAGE_TOKEN_KEY, token);
+        case SET_TOKEN:
+            const {newToken} = action.payload;
+            localStorage.setItem(LOCALSTORAGE_TOKEN_KEY, newToken);
             return {
                 ...state,
-                ActivePage: getDefaultAuthenticatedPage(profile),
-                token,
-                profile
+                token: newToken
+            }
+        case SET_PROFILE:
+            const {newProfile} = action.payload;
+            return {
+                ...state,
+                ActivePage: getDefaultAuthenticatedPage(newProfile),
+                profile: newProfile
             };
         default:
             return state;

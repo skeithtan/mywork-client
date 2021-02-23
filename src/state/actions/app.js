@@ -1,5 +1,6 @@
 export const SET_ACTIVE_PAGE = "SET_ACTIVE_PAGE";
-export const SIGN_IN = "SIGN_IN";
+export const SET_TOKEN = "SET_TOKEN";
+export const SET_PROFILE = "SET_PROFILE";
 export const SIGN_OUT = "SIGN_OUT";
 
 export const setActivePage = newActivePage => ({
@@ -7,11 +8,16 @@ export const setActivePage = newActivePage => ({
     payload: {newActivePage}
 });
 
-export const signIn = ({token, profile}) => ({
-    type: SIGN_IN,
-    payload: {token, profile}
+export const setToken = newToken => ({
+    type: SET_TOKEN,
+    payload: {newToken}
 });
 
-export const signOut = () => ({
+export const setProfile = newProfile => ({
+    type: SET_PROFILE,
+    payload: {newProfile}
+});
+
+export const setSignedOut = () => ({
     type: SIGN_OUT
 });
