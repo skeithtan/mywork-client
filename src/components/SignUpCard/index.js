@@ -75,7 +75,7 @@ function SignUpCardComponent({setActivePage}) {
                             variant="h5"
                             component="h1"
                         >
-                            Sign Up To MyWork
+                            Sign up to MyWork
                         </Typography>
                     </Grid>
 

@@ -77,7 +77,7 @@ function NavBarComponent({activePage, profile, setActivePage, setSignedOut}) {
                     </Grid>
                 </Grid>
 
-                <Grid item alignContent="right">
+                <Grid item>
                     <Button size="small" onClick={handleUserClick}>{profile.name} <ExpandMoreIcon/></Button>
                     <Menu
                         anchorEl={userAchorEl}
