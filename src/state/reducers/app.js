@@ -1,9 +1,9 @@
-import {SignInPage, DeliverablePage} from "../../pages";
+import {PAGES} from "../../pages";
 import {SET_ACTIVE_PAGE, SIGN_OUT, SET_PROFILE, SET_TOKEN} from "../actions/app";
 import {LOCALSTORAGE_TOKEN_KEY} from "../../services/axios";
 
 const defaultAppState = {
-    ActivePage: SignInPage,
+    activePage: PAGES.SIGN_IN,
     token: localStorage.getItem(LOCALSTORAGE_TOKEN_KEY),
     profile: undefined
 };
@@ -13,7 +13,7 @@ function getDefaultAuthenticatedPage(profile) {
         case "PR": // TODO: Differentiate
         case "ST":
         default:
-            return DeliverablePage;
+            return PAGES.DELIVERABLES;
     }
 }
 
@@ -22,13 +22,13 @@ export function appStateReducer(state = defaultAppState, action) {
         case SET_ACTIVE_PAGE:
             return {
                 ...state,
-                ActivePage: action.payload.newActivePage
+                activePage: action.payload.newActivePage
             };
         case SIGN_OUT:
             localStorage.removeItem(LOCALSTORAGE_TOKEN_KEY)
             return {
                 ...state,
-                ActivePage: SignInPage,
+                activePage: PAGES.SIGN_IN,
                 token: null,
                 profile: undefined
             };
@@ -43,7 +43,7 @@ export function appStateReducer(state = defaultAppState, action) {
             const {newProfile} = action.payload;
             return {
                 ...state,
-                ActivePage: getDefaultAuthenticatedPage(newProfile),
+                activePage: getDefaultAuthenticatedPage(newProfile),
                 profile: newProfile
             };
         default:

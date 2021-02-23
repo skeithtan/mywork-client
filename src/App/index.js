@@ -1,27 +1,25 @@
-import React, {useState} from "react";
-import {SignUpPage, SignInPage, DeliverablePage} from "../pages/";
+import React from "react";
+import {PAGES} from "../pages/";
 import {NavBar} from "../components/NavBar";
 import {connect} from 'react-redux'
-import {setActivePage, setProfile, setSignedOut} from "../state/actions/app";
 import {Grid} from "@material-ui/core";
 
 const mapStateToProps = (state, ownProps) => ({
-    ...state.appState,
+    activePage: state.appState.activePage,
     ...ownProps
 });
 
-const mapDispatchToProps = {setActivePage, signIn: setProfile, signOut: setSignedOut};
+export const App = connect(mapStateToProps, null)(AppComponent);
 
-export const App = connect(mapStateToProps, mapDispatchToProps)(AppComponent);
+function AppComponent({activePage}) {
+    const hasNavbar = ![PAGES.SIGN_UP, PAGES.SIGN_IN].includes(activePage);
+    const ActivePage = activePage.component;
 
-function AppComponent(props) {
-    const {ActivePage, profile, setActivePage, signIn, signOut} = props;
-    const hasNavbar = ![SignUpPage, SignInPage].includes(ActivePage);
     return (
         <Grid container direction="column" alignItems="stretch">
             {hasNavbar && (
                 <Grid item>
-                    <NavBar setActivePage={setActivePage}/>
+                    <NavBar/>
                 </Grid>
             )}
 
