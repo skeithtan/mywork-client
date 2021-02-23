@@ -17,7 +17,7 @@ const mapDispatchToProps = {setDeliverables, setErrorMessage, setIsLoading};
 export const DeliverablePage = connect(mapStateToProps, mapDispatchToProps)(DeliverablePageComponent);
 
 function DeliverablePageComponent(props) {
-    const {setDeliverables, setErrorMessage, setIsLoading, isLoading} = props;
+    const {deliverableSubmissions, setDeliverables, setErrorMessage, setIsLoading, isLoading} = props;
     const {container, sidebarContainer} = useStyles();
 
     const getDeliverables = () => {
@@ -32,7 +32,7 @@ function DeliverablePageComponent(props) {
     };
 
     useEffect(() => {
-        if (!isLoading) {
+        if (!isLoading && !deliverableSubmissions) {
             getDeliverables();
         }
     }, []);
