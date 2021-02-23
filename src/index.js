@@ -2,13 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'fontsource-roboto';
 import {App} from './App';
+import {Provider} from "react-redux";
 import reportWebVitals from './reportWebVitals';
 import {CssBaseline} from "@material-ui/core";
+import {store} from "./state/store";
 
 ReactDOM.render(
     <React.StrictMode>
         <CssBaseline/>
-        <App/>
+        <Provider store={store}>
+            <App/>
+        </Provider>
     </React.StrictMode>,
     document.getElementById('root')
 );
