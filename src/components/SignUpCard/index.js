@@ -5,7 +5,7 @@ import {
     FormControl,
     FormControlLabel,
     FormLabel,
-    Grid,
+    Grid, LinearProgress,
     Radio,
     RadioGroup,
     TextField,
@@ -16,52 +16,87 @@ import {useStyles} from "./styles";
 import {connect} from "react-redux";
 import {setActivePage} from "../../state/actions/app";
 import {PAGES} from "../../pages";
+import {createProfile} from "../../services/auth";
 
 const mapDispatchToProps = {setActivePage};
 
 export const SignUpCard = connect(null, mapDispatchToProps)(SignUpCardComponent);
 
+const STUDENT_VALUE = "ST";
+const PROFESSOR_VALUE = "PR";
+
 function SignUpCardComponent({setActivePage}) {
-    const [value, setValue] = useState("student");
+    const {root, fullWidth} = useStyles();
+
     const [name, setName] = useState("");
+    const [userType, setUserType] = useState(STUDENT_VALUE);
     const [program, setProgram] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [rePassword, setRePassword] = useState("");
-    const {root, fullWidth} = useStyles();
-    const passwordsMatch = password === rePassword;
-    const formIsInvalid = !name || !program || !email || !password || !rePassword || !passwordsMatch;
-    const professorValid = value === "professor" ? "none" : ""
+    const [confirm, setConfirm] = useState("");
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const isStudent = userType === STUDENT_VALUE;
+    const passwordsMatch = password === confirm;
+    const formIsInvalid = !name || !program || !email || !password || !confirm || !passwordsMatch;
 
     const goToSignInPage = () => {
         setActivePage(PAGES.SIGN_IN);
     };
 
+    const onSignUpClick = () => {
+        setIsLoading(true);
+        createProfile({email, password, name, program, user_type: userType})
+            .then(profile => {
+                setIsLoading(false);
+
+                if (profile.name === name) {
+                    alert(`Welcome to MyWork, ${name}. Sign in to continue.`);
+                    goToSignInPage();
+                }
+            })
+            .catch(error => {
+                setErrorMessage(error.message);
+                setIsLoading(false);
+            })
+    }
+
     return (
         <Card className={root}>
+            {isLoading && <LinearProgress/>}
             <CardContent>
                 <Grid container
-                      spacing={2}
+                      spacing={3}
                       direction="column"
                       alignItems="stretch">
                     <Grid item>
                         <Typography
-                            varient="h5"
+                            variant="h5"
                             component="h1"
                         >
                             Sign Up To MyWork
                         </Typography>
                     </Grid>
+
+                    {errorMessage && (
+                        <Grid item>
+                            <Typography variant="subtitle2" color="error">
+                                {errorMessage}
+                            </Typography>
+                        </Grid>
+                    )}
+
                     <Grid item>
                         <FormControl component="fieldset">
                             <FormLabel component="legend">I am a:</FormLabel>
-                            <RadioGroup aria-label="occupation" name="occupation" value={value}
+                            <RadioGroup aria-label="occupation" name="occupation" value={userType}
                                         onChange={(e) => {
-                                            setValue(e.target.value);
+                                            setUserType(e.target.value);
                                         }}
                             >
-                                <FormControlLabel control={<Radio/>} value="student" label="Student"/>
-                                <FormControlLabel control={<Radio/>} value="professor" label="Professor"/>
+                                <FormControlLabel control={<Radio/>} value={STUDENT_VALUE} label="Student"/>
+                                <FormControlLabel control={<Radio/>} value={PROFESSOR_VALUE} label="Professor"/>
                             </RadioGroup>
                         </FormControl>
                     </Grid>
@@ -73,16 +108,18 @@ function SignUpCardComponent({setActivePage}) {
                             onChange={e => setName(e.target.value)}
                             className={fullWidth}/>
                     </Grid>
-                    <Grid item style={{display: professorValid}}>
-                        <TextField
-                            variant="outlined"
-                            label="Program"
-                            value={program}
-                            onChange={e => setProgram(e.target.value)}
-                            className={fullWidth}
-                            disabled={professorValid}
-                        />
-                    </Grid>
+                    {isStudent && (
+                        <Grid item>
+                            <TextField
+                                variant="outlined"
+                                label="Program"
+                                value={program}
+                                onChange={e => setProgram(e.target.value)}
+                                className={fullWidth}
+                                disabled={!isStudent}
+                            />
+                        </Grid>
+                    )}
                     <Grid item>
                         <TextField
                             variant="outlined"
@@ -108,12 +145,8 @@ function SignUpCardComponent({setActivePage}) {
                             variant="outlined"
                             label="Re-enter Password"
                             type="password"
-                            value={rePassword}
-                            onChange={
-                                e => {
-                                    setRePassword(e.target.value)
-                                }
-                            }
+                            value={confirm}
+                            onChange={ e => { setConfirm(e.target.value) }}
                             className={fullWidth}
                             error={!passwordsMatch}
                         />
@@ -121,7 +154,7 @@ function SignUpCardComponent({setActivePage}) {
                     <Grid item container justify="space-between" alignItems="center">
                         <Grid item>
                             <Button variant="contained" color="primary"
-                                    onClick={() => alert("Program " + value)}
+                                    onClick={onSignUpClick}
                                     disabled={formIsInvalid}
                             >
                                 Sign Up
