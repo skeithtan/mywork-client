@@ -5,6 +5,6 @@ export const useStyles = makeStyles({
         width: 320,
     },
     fullWidth: {
-        width: "100%"
+        width: "100%",
     }
 });
