@@ -25,7 +25,6 @@ function SignInCardComponent({token, setToken, setProfile}) {
     const [password, setPassword] = useState("");
 
     useEffect(() => {
-        console.log("In effect");
         if (!token) {
             setIsLoading(false);
             return;
@@ -37,23 +36,20 @@ function SignInCardComponent({token, setToken, setProfile}) {
                 setIsLoading(false);
                 setError(error.message);
             });
-    }, []);
+    }, [token, setProfile]);
 
     function onSignInClick() {
         setIsLoading(true);
         signIn(emailAddress, password)
             .then(({token}) => {
-                console.log("Got token", token);
                 setToken(token);
                 return fetchProfile();
             })
             .then(profile => {
-                console.log("Got profile", profile);
                 setProfile(profile);
                 setIsLoading(false);
             })
             .catch(error => {
-                console.log("Error", error);
                 setIsLoading(false);
                 setError(error.message);
             });
