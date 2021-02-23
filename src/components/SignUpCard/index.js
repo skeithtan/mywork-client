@@ -5,7 +5,7 @@ import {
     FormControl,
     FormControlLabel,
     FormLabel,
-    Grid, Hidden,
+    Grid,
     Radio,
     RadioGroup,
     TextField,
@@ -13,9 +13,15 @@ import {
 } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import {useStyles} from "./styles";
-import {display} from "@material-ui/system";
+import {connect} from "react-redux";
+import {setActivePage} from "../../state/actions/app";
+import {PAGES} from "../../pages";
 
-export function SignUpCard() {
+const mapDispatchToProps = {setActivePage};
+
+export const SignUpCard = connect(null, mapDispatchToProps)(SignUpCardComponent);
+
+function SignUpCardComponent({setActivePage}) {
     const [value, setValue] = useState("student");
     const [name, setName] = useState("");
     const [program, setProgram] = useState("");
@@ -25,7 +31,11 @@ export function SignUpCard() {
     const {root, fullWidth} = useStyles();
     const passwordsMatch = password === rePassword;
     const formIsInvalid = !name || !program || !email || !password || !rePassword || !passwordsMatch;
-    const professorValid = value === "professor" ? "none":""
+    const professorValid = value === "professor" ? "none" : ""
+
+    const goToSignInPage = () => {
+        setActivePage(PAGES.SIGN_IN);
+    };
 
     return (
         <Card className={root}>
@@ -63,15 +73,15 @@ export function SignUpCard() {
                             onChange={e => setName(e.target.value)}
                             className={fullWidth}/>
                     </Grid>
-                    <Grid item style={{display:professorValid}}>
-                            <TextField
-                                variant="outlined"
-                                label="Program"
-                                value={program}
-                                onChange={e => setProgram(e.target.value)}
-                                className={fullWidth}
-                                disabled={professorValid}
-                            />
+                    <Grid item style={{display: professorValid}}>
+                        <TextField
+                            variant="outlined"
+                            label="Program"
+                            value={program}
+                            onChange={e => setProgram(e.target.value)}
+                            className={fullWidth}
+                            disabled={professorValid}
+                        />
                     </Grid>
                     <Grid item>
                         <TextField
@@ -119,7 +129,7 @@ export function SignUpCard() {
                         </Grid>
 
                         <Grid item>
-                            <Button variant="text" size="small">
+                            <Button variant="text" onClick={goToSignInPage}>
                                 I have an account
                             </Button>
                         </Grid>

@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import {setActivePage, setProfile, setToken} from "../../state/actions/app";
 import {connect} from "react-redux";
 import {fetchProfile, signIn} from "../../services/auth";
+import {PAGES} from "../../pages";
 
 
 const mapStateToProps = (state, ownProps) => ({
@@ -17,7 +18,7 @@ const mapDispatchToProps = {setActivePage, setProfile, setToken};
 
 export const SignInCard = connect(mapStateToProps, mapDispatchToProps)(SignInCardComponent);
 
-function SignInCardComponent({token, setToken, setProfile}) {
+function SignInCardComponent({token, setToken, setProfile, setActivePage}) {
     const {root, fullWidth} = useStyles();
     const [errorMessage, setError] = useState(undefined);
     const [isLoading, setIsLoading] = useState(true);
@@ -54,6 +55,10 @@ function SignInCardComponent({token, setToken, setProfile}) {
                 setError(error.message);
             });
     }
+
+    const onSignUpClick = () => {
+        setActivePage(PAGES.SIGN_UP);
+    };
 
     return (
         <Card className={root}>
@@ -109,7 +114,7 @@ function SignInCardComponent({token, setToken, setProfile}) {
                         </Button>
                     </Grid>
                     <Grid item>
-                        <Button className={fullWidth} size="small" variant="text">
+                        <Button className={fullWidth} size="small" variant="text" onClick={onSignUpClick}>
                             Don't have an account? Sign up
                         </Button>
                     </Grid>
