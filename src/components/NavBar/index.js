@@ -1,98 +1,57 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {
-    Box,
-    ButtonGroup,
-    ClickAwayListener,
-    Grid,
-    Grow,
-    MenuItem,
-    MenuList,
     Paper,
-    Popper,
-    Typography
+    Grid,
+    Typography, Menu, MenuItem
 } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {useStyles} from "./styles";
 
-const options = ['Dashboard', 'Deliverables'];
-
 export function NavBar() {
-    const {container, title, navText} = useStyles();
-    const [open, setOpen] = React.useState(false);
-    const anchorRef = React.useRef(null);
-    const [selectedIndex, setSelectedIndex] = React.useState(1);
+    const {container, title} = useStyles();
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
-    const handleClick = () => {
-        console.info(`You clicked ${options[selectedIndex]}`);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
     };
 
-    const handleMenuItemClick = (event, index) => {
-        setSelectedIndex(index);
-        setOpen(false);
-    };
-
-    const handleToggle = () => {
-        setOpen((prevOpen) => !prevOpen);
-    };
-
-    const handleClose = (event) => {
-        if (anchorRef.current && anchorRef.current.contains(event.target)) {
-            return;
-        }
-
-        setOpen(false);
+    const handleClose = () => {
+        setAnchorEl(null);
     };
 
     return (
-        <div className={container}>
+        <Paper square className={container}>
 
-            <Box display="flex">
-                <Box>
-                    <Typography className={[title, navText].join(" ")} variant="h6" color="default">
-                        MyWork Student
-                    </Typography>
-                </Box>
-                <Box flexGrow={1}>
-                    <ButtonGroup variant="contained" color="secondary" size="small">
-
-                        <Button>{options[selectedIndex]}</Button>
-                        <Button
-                            onClick={handleToggle}>
-                            <ArrowDropDownIcon/>
+            <Grid container justify="space-between" alignItems="center" wrap="nowrap">
+                <Grid item container alignItems="center" spacing={1}>
+                    <Grid item>
+                        <Typography className={title} variant="h6">
+                            MyWork Student
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Button onClick={handleClick}>
+                            Deliverables <ExpandMoreIcon/>
                         </Button>
-                    </ButtonGroup>
-                </Box>
-                <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-                    {({TransitionProps, placement}) => (
-                        <Grow
-                            {...TransitionProps}
-                            style={{
-                                transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
-                            }}
-                        ><Paper>
-                            <ClickAwayListener onClickAway={handleClose}>
-                                <MenuList id="split-button-menu">
-                                    {options.map((option, index) => (
-                                        <MenuItem
-                                            key={option}
-                                            disabled={index === 2}
-                                            selected={index === selectedIndex}
-                                            onClick={(event) => handleMenuItemClick(event, index)}
-                                        >
-                                            {option}
-                                        </MenuItem>
-                                    ))}
-                                </MenuList>
-                            </ClickAwayListener>
-                        </Paper>
-                        </Grow>
-                    )}
-                </Popper>
-                <Box>
-                    <Button size="small" className={navText}>Log in</Button>
-                </Box>
-            </Box>
-        </div>
+
+                        <Menu
+                            id="simple-menu"
+                            anchorEl={anchorEl}
+                            keepMounted
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                        >
+                            <MenuItem onClick={handleClose}>Deliverables</MenuItem>
+                            <MenuItem onClick={handleClose}>Courses</MenuItem>
+                        </Menu>
+                    </Grid>
+                </Grid>
+
+                <Grid item>
+                    <Button size="small">Log in</Button>
+                </Grid>
+            </Grid>
+        </Paper>
     );
 }
