@@ -1,5 +1,5 @@
 import React from 'react'
-import {SignUpCard} from "../../Components/SignUpCard";
+import {SignUpCard} from "../../components/SignUpCard";
 import {useStyles} from "./styles";
 
 export function SignUpPage() {

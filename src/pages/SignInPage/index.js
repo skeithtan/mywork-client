@@ -1,5 +1,5 @@
 import React from "react";
-import { SignInCard } from "../../Components/SignInCard";
+import { SignInCard } from "../../components/SignInCard";
 import {useStyles} from "./styles";
 
 export function SignInPage() {
