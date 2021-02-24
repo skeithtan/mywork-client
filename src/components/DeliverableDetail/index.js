@@ -4,6 +4,7 @@ import {DeleverableAttachmentCard} from "../DeliverableAttachmentCard"
 import {Grid, Typography} from "@material-ui/core";
 import {useStyles} from "./styles";
 import {connect} from "react-redux";
+import {DeliverableTeamCard} from "../DeliverableTeamCard";
 
 const mapStateToProps = (state, ownProps) => ({
     ...ownProps,
@@ -20,6 +21,9 @@ export function DeliverableDetailComponent({activeDeliverableSubmission}) {
                 <Grid container direction="column" className={cardsContainer} justify="flex-start" wrap="nowrap">
                     <Grid item>
                         <DeliverableDescriptionCard submission={activeDeliverableSubmission}/>
+                    </Grid>
+                    <Grid item>
+                        <DeliverableTeamCard/>
                     </Grid>
                     <Grid item>
                         <DeleverableAttachmentCard/>
