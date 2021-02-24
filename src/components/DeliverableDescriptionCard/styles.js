@@ -4,10 +4,13 @@ export const useStyles = makeStyles({
     deliverableCard: {
         margin: 20,
     },
-    alarm: {
-        width: 13,
-        height: 13,
-        marginRight: 3
+    alarmIcon: {
+        fontSize: '1rem',
+        marginRight: 5
+    },
+    sendIcon: {
+        fontSize: '1rem',
+        marginLeft: 8
     },
     deadlineText:{
       display:'flex',
