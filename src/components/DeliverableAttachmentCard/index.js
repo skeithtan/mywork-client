@@ -15,7 +15,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 
 export function DeleverableAttachmentCard() {
-    const {attachmentCard} = useStyles();
+    const {attachmentCard, errorCard} = useStyles();
     const [attachments, setAttachments] = useState([])
 
     function attachmentAddClicked() {
@@ -27,7 +27,7 @@ export function DeleverableAttachmentCard() {
     }
 
     return (
-        <Card variant="outlined" className={attachmentCard}>
+        <Card className={attachmentCard}>
             <CardContent>
                 <Grid container direction="column">
                     <Grid item container direction="row" justify="space-between">
@@ -59,9 +59,11 @@ export function DeleverableAttachmentCard() {
                             </Fragment>
                             )
                         ):
-                            <Typography color="textSecondary" align="center">
+                            <div className={errorCard}>
+                            <Typography color="textSecondary" >
                                 No Attachments found
                             </Typography>
+                            </div>
                         }
                         </List>
                     </Grid>

@@ -57,7 +57,7 @@ export function DeliverableTeamCard() {
                         ))}
                         {team.length === 0 && (
                             <div className={errorCard}>
-                                <Typography color="textSecondary" align="center">No Team Members</Typography>
+                                <Typography color="textSecondary" align="center">No team members found</Typography>
                             </div>
                         )}
                     </Grid>

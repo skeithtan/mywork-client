@@ -11,8 +11,8 @@ export const useStyles= makeStyles(
         errorCard:{
             display: "flex",
             justifyContent: "center",
-            alignItem: "center",
-            height: 50,
+            alignItems: "center",
+            height: 80,
         }
     }
 )
