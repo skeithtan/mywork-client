@@ -14,9 +14,18 @@ export function DeliverableListItem(props) {
         deadlineContainer,
         alarmIconOverdue
     } = useStyles();
-    const {deliverable, date_submitted} = props.submission;
+
+    let deliverable, date_submitted, isOverdue;
+
+    if (props.submission) {
+        deliverable = props.submission.deliverable;
+        date_submitted = props.submission.date_submitted;
+        isOverdue = !date_submitted && deliverable.deadline.isBefore(moment());
+    } else {
+        deliverable = props.deliverable;
+    }
+
     const {name, course_name, deadline} = deliverable;
-    const isOverdue = !date_submitted && deliverable.deadline.isBefore(moment());
 
     return (
         <Grid

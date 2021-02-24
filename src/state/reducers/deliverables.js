@@ -2,7 +2,7 @@ import {
     SET_ACTIVE_DELIVERABLE_SUBMISSION,
     SET_DELIVERABLE_SUBMISSIONS, SET_ERROR_MESSAGE, SET_IS_LOADING,
 } from "../actions/deliverables";
-import moment from "moment";
+import {momentizeSubmission} from "../../utils";
 
 const defaultDeliverableState = {
     activeDeliverableSubmission: null,
@@ -10,16 +10,6 @@ const defaultDeliverableState = {
     isLoading: false,
     errorMessage: null
 };
-
-const transformDeliverableSubmission = submission => ({
-    ...submission,
-    date_submitted: submission.date_submitted && moment(submission.date_submitted),
-    deliverable: {
-        ...submission.deliverable,
-        deadline: moment(submission.deliverable.deadline),
-        date_created: moment(submission.deliverable.date_created)
-    }
-});
 
 export function deliverableStateReducer(state = defaultDeliverableState, action) {
     switch (action.type) {
@@ -30,7 +20,7 @@ export function deliverableStateReducer(state = defaultDeliverableState, action)
             };
 
         case SET_DELIVERABLE_SUBMISSIONS:
-            const deliverableSubmissions = action.payload.newDeliverableSubmissions.map(transformDeliverableSubmission);
+            const deliverableSubmissions = action.payload.newDeliverableSubmissions.map(momentizeSubmission);
             return {
                 ...state,
                 activeDeliverableSubmission: null,

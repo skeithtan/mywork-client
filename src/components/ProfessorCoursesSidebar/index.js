@@ -4,7 +4,7 @@ import {ErrorView} from "../ErrorView";
 import {connect} from "react-redux";
 import {useStyles} from "./styles";
 import {ProfessorCoursesList} from "../ProfessorCoursesList";
-import {CourseDeliverablesList} from "../CourseDeliverableList";
+import {CourseDeliverablesSidebar} from "../CourseDeliverablesSidebar";
 
 const mapStateToProps = (state, ownProps) => ({
     ...ownProps,
@@ -39,7 +39,7 @@ function ProfessorCoursesSidebarComponent({isLoading, errorMessage, courses, get
                 )}
 
                 {courses && activeCourse && (
-                    <CourseDeliverablesList/>
+                    <CourseDeliverablesSidebar/>
                 )}
             </Grid>
         </Paper>

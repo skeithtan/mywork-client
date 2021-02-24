@@ -1,7 +1,7 @@
 export const SET_ACTIVE_COURSE = "SET_ACTIVE_COURSE";
 export const SET_COURSES = "SET_COURSES";
-export const SET_IS_LOADING = "SET_IS_LOADING";
-export const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE";
+export const SET_IS_LOADING = "SET_PROFESSOR_COURSES_IS_LOADING";
+export const SET_ERROR_MESSAGE = "SET_PROFESSOR_COURSES_ERROR_MESSAGE";
 
 export const setActiveCourse = newActiveCourse => ({
     type: SET_ACTIVE_COURSE,
