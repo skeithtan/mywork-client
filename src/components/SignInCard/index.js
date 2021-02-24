@@ -101,6 +101,12 @@ function SignInCardComponent({token, setToken, setProfile, setActivePage}) {
                             type="password"
                             className={fullWidth}
                             disabled={isLoading}
+                            onKeyDown={(e)=>
+                            {
+                             if(e.keyCode===13){
+                                 onSignInClick()
+                             }
+                            }}
                         />
                     </Grid>
                     <Grid item>

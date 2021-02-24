@@ -2,9 +2,10 @@ import React, {useState, Fragment} from "react";
 import {Divider, Grid, List, ListItem, ListSubheader} from "@material-ui/core";
 import {SearchBox} from "../SearchBox";
 import {useStyles} from "./styles";
-import {setActiveDeliverable} from "../../state/actions/deliverables";
+import {setActiveDeliverable, setDeliverables} from "../../state/actions/deliverables";
 import {connect} from "react-redux";
 import {DeliverableListItem} from "../DeliverableListItem";
+import {DeliverableDescriptionCard} from "../DeliverableDescriptionCard";
 
 const mapStateToProps = (state, ownProps) => ({
     ...ownProps,
@@ -30,6 +31,10 @@ function DeliverableListComponent({deliverableSubmissions, setActiveDeliverable}
         return b.deliverable.deadline.unix() - a.deliverable.deadline.unix();
     });
 
+    const onSelectDeliverable = submission => () => {
+        setActiveDeliverable(submission);
+    }
+
     const submitted = displayDeliverables.filter(submission => Boolean(submission.date_submitted));
     const toSubmit = displayDeliverables.filter(submission => submission.date_submitted === null);
 
@@ -50,12 +55,12 @@ function DeliverableListComponent({deliverableSubmissions, setActiveDeliverable}
                         <ul className={ul}>
                             <ListSubheader>TO SUBMIT</ListSubheader>
                             {toSubmit.map(submission => (
-                               <Fragment key={submission.id}>
-                                   <ListItem button>
-                                       <DeliverableListItem submission={submission}/>
-                                   </ListItem>
-                                   <Divider />
-                               </Fragment>
+                                <Fragment key={submission.id}>
+                                    <ListItem button onClick={onSelectDeliverable(submission)}>
+                                        <DeliverableListItem submission={submission}/>
+                                    </ListItem>
+                                    <Divider/>
+                                </Fragment>
                             ))}
                         </ul>
                     </li>
@@ -64,16 +69,16 @@ function DeliverableListComponent({deliverableSubmissions, setActiveDeliverable}
                         <ul className={ul}>
                             <ListSubheader>SUBMITTED</ListSubheader>
                             {submitted.map(submission => (
-                                <ListItem button key={submission.id}>
-                                    <DeliverableListItem submission={submission}/>
-                                </ListItem>
+                                <Fragment key={submission.id}>
+                                    <ListItem button onClick={onSelectDeliverable(submission)}>
+                                        <DeliverableListItem submission={submission}/>
+                                    </ListItem>
+                                    <Divider/>
+                                </Fragment>
                             ))}
                         </ul>
                     </li>
-
                 </List>
-
-
             </Grid>
         </Grid>
     )

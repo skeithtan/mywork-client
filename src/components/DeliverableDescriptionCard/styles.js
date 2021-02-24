@@ -2,7 +2,6 @@ import {makeStyles} from "@material-ui/core";
 
 export const useStyles = makeStyles({
     deliverableCard: {
-        width: 800,
         margin: 20,
     },
     alarm: {
