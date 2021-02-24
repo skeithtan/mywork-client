@@ -52,7 +52,7 @@ export function CourseDeliverablesSidebarComponent(props) {
     }, []);
 
     return (
-        <Grid container className={container} direction="column" alignItems="stretch" justify="flex-start">
+        <Grid container className={container} direction="column" alignItems="stretch" justify="flex-start" wrap="nowrap">
             <Grid item container className={titleBarContainer} spacing={2}>
                 <Grid item container justify="space-between">
                     <Grid item>
@@ -81,7 +81,9 @@ export function CourseDeliverablesSidebarComponent(props) {
             <Divider/>
 
             {courseDeliverables && (
-                <CourseDeliverablesList/>
+                <Grid item xs>
+                    <CourseDeliverablesList/>
+                </Grid>
             )}
 
             {isLoading && (

@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from "react";
-import {Divider, Grid, List, ListItem, ListSubheader} from "@material-ui/core";
+import {Divider, Fab, Grid, List, ListItem, ListSubheader} from "@material-ui/core";
 import {SearchBox} from "../SearchBox";
 import {useStyles} from "./styles";
 import {setActiveCourseDeliverable} from "../../state/actions/courseDeliverables";
@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import {isSearchMatch} from "../../utils";
 import moment from "moment";
 import {DeliverableListItem} from "../DeliverableListItem";
+import AddIcon from "@material-ui/icons/Add";
 
 const mapStateToProps = (state, ownProps) => ({
     ...ownProps,
@@ -33,7 +34,7 @@ export function CourseDeliverablesListComponent({
                                                     setActiveCourseDeliverable,
                                                     activeCourseDeliverable
                                                 }) {
-    const {searchContainer, listSection, ul} = useStyles();
+    const {container, searchContainer, listSection, ul, fab} = useStyles();
     const [searchKeyword, setSearchKeyword] = useState("");
 
     const query = searchKeyword.trim();
@@ -52,7 +53,7 @@ export function CourseDeliverablesListComponent({
     };
 
     return (
-        <Grid container direction="column">
+        <Grid container className={container} direction="column">
             <Grid item className={searchContainer}>
                 <SearchBox
                     placeholder="Search deliverables"
@@ -96,6 +97,11 @@ export function CourseDeliverablesListComponent({
                 )}
             </List>
 
+            {courseDeliverables && (
+                <Fab color="primary" className={fab}>
+                    <AddIcon/>
+                </Fab>
+            )}
         </Grid>
     )
 }
