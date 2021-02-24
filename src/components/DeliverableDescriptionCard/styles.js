@@ -8,10 +8,6 @@ export const useStyles = makeStyles({
         fontSize: '1rem',
         marginRight: 5
     },
-    sendIcon: {
-        fontSize: '1rem',
-        marginLeft: 8
-    },
     deadlineText:{
       display:'flex',
       alignItems: 'center',

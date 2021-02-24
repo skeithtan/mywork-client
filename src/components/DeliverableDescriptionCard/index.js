@@ -1,10 +1,9 @@
 import React from 'react';
 import {useStyles} from "./styles";
-import {Box, Button, Card, CardContent, Grid, Typography} from "@material-ui/core";
+import {Button, Card, CardContent, Grid, Typography} from "@material-ui/core";
 import AlarmIcon from '@material-ui/icons/Alarm';
-import SendIcon from '@material-ui/icons/Send';
 
-export function DeliverableDescriptionCard({submission}) {
+export function DeliverableDescriptionCard({deliverable, actions}) {
     const {deliverableCard, alarmIcon, sendIcon, deadlineText} = useStyles();
     const {
         name,
@@ -14,12 +13,12 @@ export function DeliverableDescriptionCard({submission}) {
         total_score,
         file_attachments,
         link_attachments
-    } = submission.deliverable;
+    } = deliverable;
 
     // TODO: Attachments
 
     return (
-        <Card varient="outlined" className={deliverableCard}>
+        <Card className={deliverableCard}>
             <CardContent>
                 <Grid container direction="column" spacing={2}>
                     <Grid item container direction="row" justify="space-between">
@@ -31,12 +30,11 @@ export function DeliverableDescriptionCard({submission}) {
                                 {course_name}
                             </Typography>
                         </Grid>
-                        <Grid item>
-                            <Button variant="outlined" color="primary">
-                                Turn over and Submit
-                                <SendIcon className={sendIcon}/>
-                            </Button>
-                        </Grid>
+                        {actions && (
+                            <Grid item>
+                                {actions}
+                            </Grid>
+                        )}
                     </Grid>
                     <Grid item container direction="row" spacing={10}>
                         <Grid xs={7} item>

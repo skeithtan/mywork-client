@@ -5,6 +5,7 @@ import {
     SET_IS_LOADING
 } from "../actions/courseDeliverables";
 import {momentizeCourse} from "../../utils";
+import {SET_ACTIVE_COURSE} from "../actions/professorCourses";
 
 const defaultCourseDeliverableState = {
     activeCourseDeliverable: null,
@@ -15,6 +16,14 @@ const defaultCourseDeliverableState = {
 
 export function courseDeliverableReducer(state = defaultCourseDeliverableState, action) {
     switch (action.type) {
+        case SET_ACTIVE_COURSE:
+            return {
+                ...state,
+                activeCourseDeliverable: null,
+                courseDeliverables: null,
+                isLoading: false,
+                errorMessage: null
+            }
         case SET_ACTIVE_COURSE_DELIVERABLE:
             return {
                 ...state,

@@ -11,8 +11,4 @@ export const useStyles = makeStyles({
         maxWidth: 1024,
         height: "100%"
     },
-    sendIcon: {
-        fontSize: '1rem',
-        marginLeft: 8
-    },
 });

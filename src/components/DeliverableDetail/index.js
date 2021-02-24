@@ -1,10 +1,11 @@
 import React from "react";
 import {DeliverableDescriptionCard} from "../DeliverableDescriptionCard";
 import {DeleverableAttachmentCard} from "../DeliverableAttachmentCard"
-import {Grid, Typography} from "@material-ui/core";
+import {Button, Grid, Typography} from "@material-ui/core";
 import {useStyles} from "./styles";
 import {connect} from "react-redux";
 import {DeliverableTeamCard} from "../DeliverableTeamCard";
+import SendIcon from "@material-ui/icons/Send";
 
 const mapStateToProps = (state, ownProps) => ({
     ...ownProps,
@@ -14,13 +15,22 @@ const mapStateToProps = (state, ownProps) => ({
 export const DeliverableDetail = connect(mapStateToProps, null)(DeliverableDetailComponent);
 
 export function DeliverableDetailComponent({activeDeliverableSubmission}) {
-    const {cardsContainer, container} = useStyles();
+    const {cardsContainer, container, sendIcon} = useStyles();
     return (
         <div className={container}>
             {activeDeliverableSubmission && (
                 <Grid container direction="column" className={cardsContainer} justify="flex-start" wrap="nowrap">
                     <Grid item>
-                        <DeliverableDescriptionCard submission={activeDeliverableSubmission}/>
+                        <DeliverableDescriptionCard
+                            user="student"
+                            deliverable={activeDeliverableSubmission.deliverable}
+                            actions={(
+                                <Button variant="outlined" color="primary">
+                                    Turn over and Submit
+                                    <SendIcon className={sendIcon}/>
+                                </Button>
+                            )}
+                        />
                     </Grid>
                     <Grid item>
                         <DeliverableTeamCard/>
