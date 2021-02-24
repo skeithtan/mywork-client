@@ -12,7 +12,7 @@ export function SearchBox({searchKeyword, setSearchKeyword, placeholder}) {
             disableUnderline
             startAdornment={
                 <InputAdornment position="start">
-                    <SearchIcon/>
+                    <SearchIcon color={searchKeyword.length > 0 ? "primary": "disabled"} />
                 </InputAdornment>
             }
             placeholder={placeholder}
