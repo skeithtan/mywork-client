@@ -1,5 +1,6 @@
 import React, {Fragment, useState} from 'react'
 import {
+    ButtonGroup,
     Card,
     CardContent,
     Grid, IconButton,
@@ -34,19 +35,20 @@ export function DeleverableAttachmentCard() {
     }
 
     return (
-        <Card variant="outlined" className={attachmentCard}>
+        <Card className={attachmentCard}>
             <CardContent>
                 <Grid container direction="column">
                     <Grid item container direction="row" justify="space-between">
                         <Grid item>
-                            <Typography variant="subtitle1">
+                            <Typography variant="h6">
                                 Your Work
                             </Typography>
                         </Grid>
                         <Grid>
-                            <Button size="small" color="primary" onClick={attachmentAddClicked}>
-                                + Add work
-                            </Button>
+                            <ButtonGroup color="primary" size="small">
+                                <Button>Upload attachment</Button>
+                                <Button>Add a link</Button>
+                            </ButtonGroup>
                         </Grid>
                     </Grid>
                     <Grid item>

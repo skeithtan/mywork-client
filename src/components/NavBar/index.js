@@ -48,6 +48,7 @@ function NavBarComponent({activePage, profile, setActivePage, setSignedOut}) {
     };
 
     const pages = getPagesForProfile(profile);
+    const version = profile.user_type === "ST" ? "Student" : "Professor";
 
     return (
         <Paper square className={container}>
@@ -56,7 +57,7 @@ function NavBarComponent({activePage, profile, setActivePage, setSignedOut}) {
                 <Grid xs item container alignItems="center" spacing={1}>
                     <Grid item>
                         <Typography className={title} variant="h6">
-                            MyWork Student
+                            MyWork {version} Console
                         </Typography>
                     </Grid>
                     <Grid item>

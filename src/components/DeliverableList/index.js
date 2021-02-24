@@ -6,6 +6,7 @@ import {setActiveDeliverable} from "../../state/actions/deliverables";
 import {connect} from "react-redux";
 import {DeliverableListItem} from "../DeliverableListItem";
 import moment from "moment";
+import {isSearchMatch} from "../../utils";
 
 const mapStateToProps = (state, ownProps) => ({
     ...ownProps,
@@ -15,9 +16,6 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = {setActiveDeliverable};
 
 export const DeliverableList = connect(mapStateToProps, mapDispatchToProps)(DeliverableListComponent);
-
-const isSearchMatch = (keyword, candidate) =>
-    candidate.toLowerCase().includes(keyword.trim().toLowerCase());
 
 const submissionIsOverdue = submission => !submission.date_submitted && submission.deliverable.deadline.isBefore(moment());
 const submissionIsToSubmit = submission => !submission.date_submitted && !submissionIsOverdue(submission);

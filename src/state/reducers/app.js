@@ -1,4 +1,4 @@
-import {PAGES} from "../../pages";
+import {getDefaultAuthenticatedPage, PAGES} from "../../pages";
 import {SET_ACTIVE_PAGE, SIGN_OUT, SET_PROFILE, SET_TOKEN} from "../actions/app";
 import {LOCALSTORAGE_TOKEN_KEY} from "../../services/axios";
 
@@ -7,15 +7,6 @@ const defaultAppState = {
     token: localStorage.getItem(LOCALSTORAGE_TOKEN_KEY),
     profile: undefined
 };
-
-function getDefaultAuthenticatedPage(profile) {
-    switch (profile.user_type) {
-        case "PR": // TODO: Differentiate
-        case "ST":
-        default:
-            return PAGES.DELIVERABLES;
-    }
-}
 
 export function appStateReducer(state = defaultAppState, action) {
     switch (action.type) {
