@@ -16,14 +16,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 export function DeleverableAttachmentCard() {
     const {attachmentCard} = useStyles();
-    const [attachments, setAttachments] = useState([{
-            url: "https://www.google.com",
-            label: "Final Project"
-        },
-        {
-            url: "https://www.google.com",
-            label: "Final Project 2"
-        }])
+    const [attachments, setAttachments] = useState([])
 
     function attachmentAddClicked() {
         //TODO
@@ -51,7 +44,7 @@ export function DeleverableAttachmentCard() {
                     </Grid>
                     <Grid item>
                         <List dense>
-                        {attachments.map(file => (
+                        {attachments.length >0 ? attachments.map(file => (
                             <Fragment>
                             <ListItem>
                                 <ListItemText>
@@ -65,7 +58,11 @@ export function DeleverableAttachmentCard() {
                             </ListItem>
                             </Fragment>
                             )
-                        )}
+                        ):
+                            <Typography color="textSecondary" align="center">
+                                No Attachments found
+                            </Typography>
+                        }
                         </List>
                     </Grid>
                 </Grid>
