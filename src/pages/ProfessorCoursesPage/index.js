@@ -5,6 +5,7 @@ import {fetchCourses} from "../../services/courses";
 import {Grid} from "@material-ui/core";
 import {ProfessorCoursesSidebar} from "../../components/ProfessorCoursesSidebar";
 import {useStyles} from "./styles";
+import {CourseDeliverableDetail} from "../../components/CourseDeliverableDetail";
 
 const mapStateToProps = (state, ownProps) => ({
     ...ownProps,
@@ -42,7 +43,7 @@ export function ProfessorCoursesPageComponent(props) {
                 <ProfessorCoursesSidebar getCourses={getCourses}/>
             </Grid>
             <Grid item xs>
-
+                <CourseDeliverableDetail/>
             </Grid>
         </Grid>
     )
