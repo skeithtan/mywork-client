@@ -61,7 +61,7 @@ export function ProfessorCoursesListComponent({courses, setActiveCourse, activeC
                             key={course.id}
                             course={course}
                             onClick={onCourseClick(course)}
-                            selected={isActive(courses)}
+                            selected={isActive(course)}
                         />
                     ))}
                 </List>

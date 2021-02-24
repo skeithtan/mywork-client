@@ -14,7 +14,6 @@ export function professorCoursesStateReducer(state=defaultProfessorCoursesState,
                 ...state,
                 activeCourse: action.payload.newActiveCourse
             };
-
         case SET_COURSES:
             return {
                 ...state,
