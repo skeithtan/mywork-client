@@ -1,10 +1,16 @@
 import {makeStyles} from "@material-ui/core";
 
 export const useStyles = makeStyles({
-    root: {
-        width: 400,
+    alarmIcon: {
+        fontSize: "0.9rem"
     },
-    deliverableName:{
-        lineHeight: 1.5,
+    deadlineText: {
+        lineHeight: 0
+    },
+    deliverableName: {
+        margin: 0
+    },
+    container: {
+        padding: "8px 0px"
     }
 });

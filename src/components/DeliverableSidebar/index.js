@@ -1,5 +1,5 @@
 import React from "react";
-import {setActiveDeliverable, setSearchKeyword} from "../../state/actions/deliverables";
+import {setActiveDeliverable} from "../../state/actions/deliverables";
 import {connect} from "react-redux";
 import {CircularProgress, Grid, Paper} from "@material-ui/core";
 import {useStyles} from "./styles";
@@ -11,7 +11,7 @@ const mapStateToProps = (state, ownProps) => ({
     ...state.deliverables
 });
 
-const mapDispatchToProps = {setActiveDeliverable, setSearchKeyword,};
+const mapDispatchToProps = {setActiveDeliverable};
 
 export const DeliverableSidebar = connect(mapStateToProps, mapDispatchToProps)(DeliverableSidebarComponent);
 

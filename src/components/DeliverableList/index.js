@@ -1,12 +1,39 @@
-import React, {useState} from "react";
-import {Divider, Grid} from "@material-ui/core";
+import React, {useState, Fragment} from "react";
+import {Divider, Grid, List, ListItem, ListSubheader} from "@material-ui/core";
 import {SearchBox} from "../SearchBox";
 import {useStyles} from "./styles";
+import {setActiveDeliverable} from "../../state/actions/deliverables";
+import {connect} from "react-redux";
+import {DeliverableListItem} from "../DeliverableListItem";
 
-export function DeliverableList() {
-    const {container, searchContainer} = useStyles();
+const mapStateToProps = (state, ownProps) => ({
+    ...ownProps,
+    ...state.deliverables
+});
+
+const mapDispatchToProps = {setActiveDeliverable}
+
+export const DeliverableList = connect(mapStateToProps, mapDispatchToProps)(DeliverableListComponent);
+
+const isSearchMatch = (keyword, candidate) =>
+    candidate.toLowerCase().includes(keyword.trim().toLowerCase());
+
+function DeliverableListComponent({deliverableSubmissions, setActiveDeliverable}) {
+    const {container, searchContainer, ul, listSection} = useStyles();
     const [searchKeyword, setSearchKeyword] = useState("");
-    // TODO empty state, loop
+
+    const query = searchKeyword.trim();
+    let displayDeliverables = query.length === 0 ? deliverableSubmissions :
+        deliverableSubmissions.filter(({deliverable}) => isSearchMatch(query, deliverable.name));
+
+    displayDeliverables = displayDeliverables.sort((a, b) => {
+        return b.deliverable.deadline.unix() - a.deliverable.deadline.unix();
+    });
+
+    const submitted = displayDeliverables.filter(submission => Boolean(submission.date_submitted));
+    const toSubmit = displayDeliverables.filter(submission => submission.date_submitted === null);
+
+    console.log("Data", submitted, toSubmit);
     return (
         <Grid container className={container} direction="column" alignItems="stretch" justify="flex-start">
             <Grid item className={searchContainer}>
@@ -18,6 +45,35 @@ export function DeliverableList() {
             </Grid>
             <Divider/>
             <Grid item xs>
+                <List subheader={<li/>}>
+                    <li className={listSection}>
+                        <ul className={ul}>
+                            <ListSubheader>TO SUBMIT</ListSubheader>
+                            {toSubmit.map(submission => (
+                               <Fragment key={submission.id}>
+                                   <ListItem button>
+                                       <DeliverableListItem submission={submission}/>
+                                   </ListItem>
+                                   <Divider />
+                               </Fragment>
+                            ))}
+                        </ul>
+                    </li>
+
+                    <li className={listSection}>
+                        <ul className={ul}>
+                            <ListSubheader>SUBMITTED</ListSubheader>
+                            {submitted.map(submission => (
+                                <ListItem button key={submission.id}>
+                                    <DeliverableListItem submission={submission}/>
+                                </ListItem>
+                            ))}
+                        </ul>
+                    </li>
+
+                </List>
+
+
             </Grid>
         </Grid>
     )
