@@ -26,7 +26,7 @@ export function deliverableStateReducer(state = defaultDeliverableState, action)
         case SET_ACTIVE_DELIVERABLE_SUBMISSION:
             return {
                 ...state,
-                activeDeliverableSubmission: action.payload.activeDeliverableSubmission
+                activeDeliverableSubmission: action.payload.newActiveDeliverableSubmission
             };
 
         case SET_DELIVERABLE_SUBMISSIONS:

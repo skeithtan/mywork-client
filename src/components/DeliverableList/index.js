@@ -12,7 +12,7 @@ const mapStateToProps = (state, ownProps) => ({
     ...state.deliverables
 });
 
-const mapDispatchToProps = {setActiveDeliverable}
+const mapDispatchToProps = {setActiveDeliverable};
 
 export const DeliverableList = connect(mapStateToProps, mapDispatchToProps)(DeliverableListComponent);
 
@@ -23,8 +23,19 @@ const submissionIsOverdue = submission => !submission.date_submitted && submissi
 const submissionIsToSubmit = submission => !submission.date_submitted && !submissionIsOverdue(submission);
 const submissionIsSubmitted = submission => Boolean(submission.date_submitted);
 
+function SubmissionItem({submission, onClick, selected}) {
+    return (
+        <Fragment>
+            <ListItem button onClick={onClick}
+                      selected={selected}>
+                <DeliverableListItem submission={submission}/>
+            </ListItem>
+            <Divider/>
+        </Fragment>
+    )
+}
 
-function DeliverableListComponent({deliverableSubmissions, setActiveDeliverable}) {
+function DeliverableListComponent({deliverableSubmissions, setActiveDeliverable, activeDeliverableSubmission}) {
     const {container, searchContainer, ul, listSection} = useStyles();
     const [searchKeyword, setSearchKeyword] = useState("");
 
@@ -32,14 +43,18 @@ function DeliverableListComponent({deliverableSubmissions, setActiveDeliverable}
     let displayDeliverables = query.length === 0 ? deliverableSubmissions :
         deliverableSubmissions.filter(({deliverable}) => isSearchMatch(query, deliverable.name));
 
-    displayDeliverables = displayDeliverables.sort((a, b) => {
-        return a.deliverable.deadline.unix() - b.deliverable.deadline.unix();
-    });
-
+    displayDeliverables = displayDeliverables.sort((a, b) => (
+        a.deliverable.deadline.unix() - b.deliverable.deadline.unix()
+    ));
 
     const overdue = displayDeliverables.filter(submissionIsOverdue);
     const toSubmit = displayDeliverables.filter(submissionIsToSubmit);
     const submitted = displayDeliverables.filter(submissionIsSubmitted);
+    const isActive = submission => submission === activeDeliverableSubmission;
+
+    const onSubmissionClick = submission => () => {
+        setActiveDeliverable(submission);
+    };
 
     return (
         <Grid container className={container} direction="column" alignItems="stretch" justify="flex-start">
@@ -58,12 +73,12 @@ function DeliverableListComponent({deliverableSubmissions, setActiveDeliverable}
                             <ul className={ul}>
                                 <ListSubheader>OVERDUE</ListSubheader>
                                 {overdue.map(submission =>
-                                    <Fragment key={submission.id}>
-                                        <ListItem button>
-                                            <DeliverableListItem submission={submission}/>
-                                        </ListItem>
-                                        <Divider/>
-                                    </Fragment>
+                                    <SubmissionItem
+                                        key={submission.id}
+                                        submission={submission}
+                                        onClick={onSubmissionClick(submission)}
+                                        selected={isActive(submission)}
+                                    />
                                 )}
                             </ul>
                         </li>
@@ -74,12 +89,12 @@ function DeliverableListComponent({deliverableSubmissions, setActiveDeliverable}
                         <ul className={ul}>
                             <ListSubheader>TO SUBMIT</ListSubheader>
                             {toSubmit.map(submission => (
-                                <Fragment key={submission.id}>
-                                    <ListItem button>
-                                        <DeliverableListItem submission={submission}/>
-                                    </ListItem>
-                                    <Divider/>
-                                </Fragment>
+                                <SubmissionItem
+                                    key={submission.id}
+                                    submission={submission}
+                                    onClick={onSubmissionClick(submission)}
+                                    selected={isActive(submission)}
+                                />
                             ))}
                         </ul>
                     </li>
@@ -88,9 +103,12 @@ function DeliverableListComponent({deliverableSubmissions, setActiveDeliverable}
                         <ul className={ul}>
                             <ListSubheader>SUBMITTED</ListSubheader>
                             {submitted.map(submission => (
-                                <ListItem button key={submission.id}>
-                                    <DeliverableListItem submission={submission}/>
-                                </ListItem>
+                                <SubmissionItem
+                                    key={submission.id}
+                                    submission={submission}
+                                    onClick={onSubmissionClick(submission)}
+                                    selected={isActive(submission)}
+                                />
                             ))}
                         </ul>
                     </li>
