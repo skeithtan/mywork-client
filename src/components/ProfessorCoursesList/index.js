@@ -1,10 +1,11 @@
 import React, {useState, Fragment} from "react";
 import {setActiveCourse} from "../../state/actions/professorCourses";
 import {connect} from "react-redux";
-import {Divider, Grid, List, ListItem, ListItemText} from "@material-ui/core";
+import {Divider, Fab, Grid, List, ListItem, ListItemText} from "@material-ui/core";
 import {SearchBox} from "../SearchBox";
 import {isSearchMatch} from "../../utils";
 import {useStyles} from "./styles";
+import AddIcon from '@material-ui/icons/Add';
 
 const mapStateToProps = (state, ownProps) => ({
     ...ownProps,
@@ -30,7 +31,7 @@ function CourseItem({course, onClick, selected}) {
 }
 
 export function ProfessorCoursesListComponent({courses, setActiveCourse, activeCourse}) {
-    const {container, searchContainer} = useStyles();
+    const {container, searchContainer, fab} = useStyles();
 
     const [searchKeyword, setSearchKeyword] = useState("");
     const query = searchKeyword.trim();
@@ -66,6 +67,10 @@ export function ProfessorCoursesListComponent({courses, setActiveCourse, activeC
                     ))}
                 </List>
             </Grid>
+
+            <Fab color="primary" className={fab}>
+                <AddIcon />
+            </Fab>
         </Grid>
     )
 }
