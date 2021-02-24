@@ -16,8 +16,8 @@ const transformDeliverableSubmission = submission => ({
     date_submitted: submission.date_submitted && moment(submission.date_submitted),
     deliverable: {
         ...submission.deliverable,
-        deadline: moment(submission.deadline),
-        date_created: moment(submission.date_created)
+        deadline: moment(submission.deliverable.deadline),
+        date_created: moment(submission.deliverable.date_created)
     }
 });
 
@@ -26,7 +26,7 @@ export function deliverableStateReducer(state = defaultDeliverableState, action)
         case SET_ACTIVE_DELIVERABLE_SUBMISSION:
             return {
                 ...state,
-                activeDeliverableSubmission: action.payload.activeDeliverableSubmission
+                activeDeliverableSubmission: action.payload.newActiveDeliverableSubmission
             };
 
         case SET_DELIVERABLE_SUBMISSIONS:

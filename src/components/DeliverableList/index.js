@@ -2,24 +2,40 @@ import React, {useState, Fragment} from "react";
 import {Divider, Grid, List, ListItem, ListSubheader} from "@material-ui/core";
 import {SearchBox} from "../SearchBox";
 import {useStyles} from "./styles";
-import {setActiveDeliverable, setDeliverables} from "../../state/actions/deliverables";
+import {setActiveDeliverable} from "../../state/actions/deliverables";
 import {connect} from "react-redux";
 import {DeliverableListItem} from "../DeliverableListItem";
-import {DeliverableDescriptionCard} from "../DeliverableDescriptionCard";
+import moment from "moment";
 
 const mapStateToProps = (state, ownProps) => ({
     ...ownProps,
     ...state.deliverables
 });
 
-const mapDispatchToProps = {setActiveDeliverable}
+const mapDispatchToProps = {setActiveDeliverable};
 
 export const DeliverableList = connect(mapStateToProps, mapDispatchToProps)(DeliverableListComponent);
 
 const isSearchMatch = (keyword, candidate) =>
     candidate.toLowerCase().includes(keyword.trim().toLowerCase());
 
-function DeliverableListComponent({deliverableSubmissions, setActiveDeliverable}) {
+const submissionIsOverdue = submission => !submission.date_submitted && submission.deliverable.deadline.isBefore(moment());
+const submissionIsToSubmit = submission => !submission.date_submitted && !submissionIsOverdue(submission);
+const submissionIsSubmitted = submission => Boolean(submission.date_submitted);
+
+function SubmissionItem({submission, onClick, selected}) {
+    return (
+        <Fragment>
+            <ListItem button onClick={onClick}
+                      selected={selected}>
+                <DeliverableListItem submission={submission}/>
+            </ListItem>
+            <Divider/>
+        </Fragment>
+    )
+}
+
+function DeliverableListComponent({deliverableSubmissions, setActiveDeliverable, activeDeliverableSubmission}) {
     const {container, searchContainer, ul, listSection} = useStyles();
     const [searchKeyword, setSearchKeyword] = useState("");
 
@@ -27,18 +43,19 @@ function DeliverableListComponent({deliverableSubmissions, setActiveDeliverable}
     let displayDeliverables = query.length === 0 ? deliverableSubmissions :
         deliverableSubmissions.filter(({deliverable}) => isSearchMatch(query, deliverable.name));
 
-    displayDeliverables = displayDeliverables.sort((a, b) => {
-        return b.deliverable.deadline.unix() - a.deliverable.deadline.unix();
-    });
+    displayDeliverables = displayDeliverables.sort((a, b) => (
+        a.deliverable.deadline.unix() - b.deliverable.deadline.unix()
+    ));
 
-    const onSelectDeliverable = submission => () => {
+    const overdue = displayDeliverables.filter(submissionIsOverdue);
+    const toSubmit = displayDeliverables.filter(submissionIsToSubmit);
+    const submitted = displayDeliverables.filter(submissionIsSubmitted);
+    const isActive = submission => submission === activeDeliverableSubmission;
+
+    const onSubmissionClick = submission => () => {
         setActiveDeliverable(submission);
-    }
+    };
 
-    const submitted = displayDeliverables.filter(submission => Boolean(submission.date_submitted));
-    const toSubmit = displayDeliverables.filter(submission => submission.date_submitted === null);
-
-    console.log("Data", submitted, toSubmit);
     return (
         <Grid container className={container} direction="column" alignItems="stretch" justify="flex-start">
             <Grid item className={searchContainer}>
@@ -51,16 +68,33 @@ function DeliverableListComponent({deliverableSubmissions, setActiveDeliverable}
             <Divider/>
             <Grid item xs>
                 <List subheader={<li/>}>
+                    {overdue.length > 0 && (
+                        <li className={listSection}>
+                            <ul className={ul}>
+                                <ListSubheader>OVERDUE</ListSubheader>
+                                {overdue.map(submission =>
+                                    <SubmissionItem
+                                        key={submission.id}
+                                        submission={submission}
+                                        onClick={onSubmissionClick(submission)}
+                                        selected={isActive(submission)}
+                                    />
+                                )}
+                            </ul>
+                        </li>
+                    )}
+
+
                     <li className={listSection}>
                         <ul className={ul}>
                             <ListSubheader>TO SUBMIT</ListSubheader>
                             {toSubmit.map(submission => (
-                                <Fragment key={submission.id}>
-                                    <ListItem button onClick={onSelectDeliverable(submission)}>
-                                        <DeliverableListItem submission={submission}/>
-                                    </ListItem>
-                                    <Divider/>
-                                </Fragment>
+                                <SubmissionItem
+                                    key={submission.id}
+                                    submission={submission}
+                                    onClick={onSubmissionClick(submission)}
+                                    selected={isActive(submission)}
+                                />
                             ))}
                         </ul>
                     </li>
@@ -69,16 +103,19 @@ function DeliverableListComponent({deliverableSubmissions, setActiveDeliverable}
                         <ul className={ul}>
                             <ListSubheader>SUBMITTED</ListSubheader>
                             {submitted.map(submission => (
-                                <Fragment key={submission.id}>
-                                    <ListItem button onClick={onSelectDeliverable(submission)}>
-                                        <DeliverableListItem submission={submission}/>
-                                    </ListItem>
-                                    <Divider/>
-                                </Fragment>
+                                <SubmissionItem
+                                    key={submission.id}
+                                    submission={submission}
+                                    onClick={onSubmissionClick(submission)}
+                                    selected={isActive(submission)}
+                                />
                             ))}
                         </ul>
                     </li>
+
                 </List>
+
+
             </Grid>
         </Grid>
     )

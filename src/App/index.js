@@ -18,7 +18,7 @@ function AppComponent({activePage}) {
     const ActivePage = activePage.component;
 
     return (
-        <Grid container className={container} direction="column" alignItems="stretch">
+        <Grid container className={container} direction="column" alignItems="stretch" wrap="nowrap">
             {hasNavbar && (
                 <Grid item className={navbarContainer}>
                     <NavBar/>
