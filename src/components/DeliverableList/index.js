@@ -5,6 +5,7 @@ import {useStyles} from "./styles";
 import {setActiveDeliverable} from "../../state/actions/deliverables";
 import {connect} from "react-redux";
 import {DeliverableListItem} from "../DeliverableListItem";
+import moment from "moment";
 
 const mapStateToProps = (state, ownProps) => ({
     ...ownProps,
@@ -18,6 +19,11 @@ export const DeliverableList = connect(mapStateToProps, mapDispatchToProps)(Deli
 const isSearchMatch = (keyword, candidate) =>
     candidate.toLowerCase().includes(keyword.trim().toLowerCase());
 
+const submissionIsOverdue = submission => !submission.date_submitted && submission.deliverable.deadline.isBefore(moment());
+const submissionIsToSubmit = submission => !submission.date_submitted && !submissionIsOverdue(submission);
+const submissionIsSubmitted = submission => Boolean(submission.date_submitted);
+
+
 function DeliverableListComponent({deliverableSubmissions, setActiveDeliverable}) {
     const {container, searchContainer, ul, listSection} = useStyles();
     const [searchKeyword, setSearchKeyword] = useState("");
@@ -27,13 +33,14 @@ function DeliverableListComponent({deliverableSubmissions, setActiveDeliverable}
         deliverableSubmissions.filter(({deliverable}) => isSearchMatch(query, deliverable.name));
 
     displayDeliverables = displayDeliverables.sort((a, b) => {
-        return b.deliverable.deadline.unix() - a.deliverable.deadline.unix();
+        return a.deliverable.deadline.unix() - b.deliverable.deadline.unix();
     });
 
-    const submitted = displayDeliverables.filter(submission => Boolean(submission.date_submitted));
-    const toSubmit = displayDeliverables.filter(submission => submission.date_submitted === null);
 
-    console.log("Data", submitted, toSubmit);
+    const overdue = displayDeliverables.filter(submissionIsOverdue);
+    const toSubmit = displayDeliverables.filter(submissionIsToSubmit);
+    const submitted = displayDeliverables.filter(submissionIsSubmitted);
+
     return (
         <Grid container className={container} direction="column" alignItems="stretch" justify="flex-start">
             <Grid item className={searchContainer}>
@@ -46,16 +53,33 @@ function DeliverableListComponent({deliverableSubmissions, setActiveDeliverable}
             <Divider/>
             <Grid item xs>
                 <List subheader={<li/>}>
+                    {overdue.length > 0 && (
+                        <li className={listSection}>
+                            <ul className={ul}>
+                                <ListSubheader>OVERDUE</ListSubheader>
+                                {overdue.map(submission =>
+                                    <Fragment key={submission.id}>
+                                        <ListItem button>
+                                            <DeliverableListItem submission={submission}/>
+                                        </ListItem>
+                                        <Divider/>
+                                    </Fragment>
+                                )}
+                            </ul>
+                        </li>
+                    )}
+
+
                     <li className={listSection}>
                         <ul className={ul}>
                             <ListSubheader>TO SUBMIT</ListSubheader>
                             {toSubmit.map(submission => (
-                               <Fragment key={submission.id}>
-                                   <ListItem button>
-                                       <DeliverableListItem submission={submission}/>
-                                   </ListItem>
-                                   <Divider />
-                               </Fragment>
+                                <Fragment key={submission.id}>
+                                    <ListItem button>
+                                        <DeliverableListItem submission={submission}/>
+                                    </ListItem>
+                                    <Divider/>
+                                </Fragment>
                             ))}
                         </ul>
                     </li>

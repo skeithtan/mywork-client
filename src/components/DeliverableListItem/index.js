@@ -2,11 +2,21 @@ import React from 'react';
 import {Grid, ListItemText, Typography} from "@material-ui/core";
 import {useStyles} from "./styles";
 import AlarmIcon from '@material-ui/icons/Alarm';
+import moment from "moment";
 
 export function DeliverableListItem(props) {
-    const {alarmIcon, deadlineText, deliverableName, container} = useStyles();
-    const {deliverable} = props.submission;
+    const {
+        alarmIcon,
+        deadlineText,
+        deadlineTextOverdue,
+        deliverableName,
+        container,
+        deadlineContainer,
+        alarmIconOverdue
+    } = useStyles();
+    const {deliverable, date_submitted} = props.submission;
     const {name, course_name, deadline} = deliverable;
+    const isOverdue = !date_submitted && deliverable.deadline.isBefore(moment());
 
     return (
         <Grid
@@ -28,12 +38,12 @@ export function DeliverableListItem(props) {
                     {course_name}
                 </Typography>
             </Grid>
-            <Grid item container direction="row" spacing={1} alignItems="center">
-                <AlarmIcon className={alarmIcon} size="small"/>
+            <Grid item className={deadlineContainer}>
+                <AlarmIcon className={isOverdue ? alarmIconOverdue : alarmIcon} size="small"/>
                 <Typography
-                    className={deadlineText}
+                    className={isOverdue ? deadlineTextOverdue : deadlineText}
                     variant="overline">
-                    {deadline.toNow()}
+                    {deadline.fromNow()}
                 </Typography>
             </Grid>
         </Grid>
