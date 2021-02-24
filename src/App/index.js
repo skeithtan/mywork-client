@@ -1,13 +1,13 @@
 import React from "react";
 import './styles.css';
-import {SignInPage} from "../SignInPage";
-import {SignUpCard} from "../SignUpCard";
-
+import {DashBoard}  from "../DashBoard";
 
 export function App() {
     return (
         <div className="App">
-            <SignUpCard></SignUpCard>
-        </div>
+             {/* <SignInPage></SignInPage> */}
+            {/* <SignUpCard></SignUpCard> */}
+            <DashBoard/>
+            </div>
     );
 }
