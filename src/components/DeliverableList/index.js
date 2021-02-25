@@ -55,7 +55,7 @@ function DeliverableListComponent({deliverableSubmissions, setActiveDeliverable,
     };
 
     return (
-        <Grid container className={container} direction="column" alignItems="stretch" justify="flex-start">
+        <Grid container className={container} direction="column" alignItems="stretch" justify="flex-start" wrap="nowrap">
             <Grid item className={searchContainer}>
                 <SearchBox
                     placeholder="Search deliverables"
