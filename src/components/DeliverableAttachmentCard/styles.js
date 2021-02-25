@@ -8,7 +8,7 @@ export const useStyles = makeStyles({
             display: "flex"
         },
         dialogeTextSpacing: {
-            marginButton: 50,
-        }
+            marginBottom: 30,
+        },
     }
 );
