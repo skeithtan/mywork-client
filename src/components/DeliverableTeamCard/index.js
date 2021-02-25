@@ -14,44 +14,74 @@ import {
 import {useStyles} from "./styles";
 import Button from "@material-ui/core/Button";
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import {onClickEmail} from "../../utils";
 
 export function DeliverableTeamCard() {
     const {nameChip, errorCard} = useStyles();
-    const [team, newteam] = useState([{name: "saudahmad@epita.fr"}, {name: "saudahmad@epita.fr"}])
+    const [team, setTeam] = useState([]);
 
     const handleDelete = val => () => {
-        newteam(team.filter(value => value.name !== val))
+        setTeam(team.filter(value => value !== val))
+    }
+
+    const onAddTeammate = () => {
+        const email_address = prompt("Enter the email address of your teammate").toLowerCase();
+        if (!email_address) {
+            return;
+        }
+
+        const newTeammate = {
+            "id": 6,
+            "name": email_address,
+            "user_type": "ST",
+            "program": "MSc Software Engineering",
+            email_address
+        }
+
+        if (email_address.includes("mehdi")) {
+            newTeammate.name = "Mehdi Laktaf"
+        }
+
+        if (email_address.includes("saud")) {
+            newTeammate.name = "Saud Ahmad";
+        }
+
+        if (email_address.includes("shrabani")) {
+            newTeammate.name = "Biswanath Sanatan Shrabani";
+        }
+
+        if (email_address.includes("naresh")) {
+            newTeammate.name = "Naresh Kumar";
+        }
+
+        setTeam([...team, newTeammate])
     }
 
     return (
         <Card variant="elevation">
             <CardContent>
-                <Grid container direction="column">
+                <Grid spacing={2} container direction="column">
                     <Grid item container direction="row" justify="space-between">
                         <Grid item>
-                            <Typography variant="subtitle1">
+                            <Typography variant="h6">
                                 Your Team
                             </Typography>
                         </Grid>
                         <Grid item>
                             <Button size="small" color="primary"
-                                    onClick={() => {
-                                        console.log(team.length)
-                                        let temp = prompt("Enter a email Address")
-                                        newteam([...team, {name: temp}])
-                                    }
-                                    }>
+                                    onClick={onAddTeammate}>
                                 + Add a teammates
                             </Button>
                         </Grid>
                     </Grid>
                     <Grid item>
-                        {team.length > 0 && team.map(t => (
+                        {team.length > 0 && team.map(member => (
                             <Chip
                                 className={nameChip}
-                                label={t.name}
-                                color="primary" variant="outlined"
-                                onDelete={handleDelete(t.name)}
+                                label={`${member.name} (${member.email_address})`}
+                                color="primary"
+                                onDelete={handleDelete(member)}
+                                onClick={onClickEmail(member.email_address)}
                                 clickable
                             />
                         ))}

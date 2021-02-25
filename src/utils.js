@@ -20,3 +20,7 @@ export const momentizeSubmission = submission => ({
     date_submitted: submission.date_submitted && moment(submission.date_submitted),
     deliverable: submission.deliverable && momentizeDeliverable(submission.deliverable)
 });
+
+export const onClickEmail = email => () => {
+    window.open(`mailto:${email}`, "_self");
+};
