@@ -58,7 +58,11 @@ function IndividualSubmitterDisplay({submitter}) {
 
 export function SubmissionCard() {
     const {padded, attachmentPadding} = useStyles();
-    const is_group_work = true;
+    const onLinkClick = url => () => {
+        window.open(url);
+    };
+
+    const preventDefault = event => event.preventDefault();
     const {date_submitted, score, feedback, link_attachments} = {
         "id": 1,
         "date_submitted": moment(),
@@ -138,12 +142,12 @@ export function SubmissionCard() {
                         <Grid item>
                             <List>
                                 {link_attachments.map(attachment => (
-                                    <ListItem button key={attachment.url}>
+                                    <ListItem button key={attachment.url} onClick={onLinkClick(attachment.url)}>
                                         <ListItemIcon>
                                             <AttachmentIcon/>
                                         </ListItemIcon>
                                         <ListItemText primary={(
-                                            <Link href={attachment.url}>
+                                            <Link href={attachment.url} onClick={preventDefault}>
                                                 {attachment.label}
                                             </Link>
                                         )}/>
