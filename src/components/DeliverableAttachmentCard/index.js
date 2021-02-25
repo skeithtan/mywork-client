@@ -3,9 +3,9 @@ import {
     ButtonGroup,
     Card,
     CardContent, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
-    Grid, IconButton,
+    Grid, IconButton, Link,
     List,
-    ListItem,
+    ListItem, ListItemIcon,
     ListItemSecondaryAction,
     ListItemText, TextField,
     Typography
@@ -13,14 +13,26 @@ import {
 import {useStyles} from "./styles";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from '@material-ui/icons/Delete';
+import AttachmentIcon from "@material-ui/icons/Attachment";
 
 
 export function DeliverableAttachmentCard() {
-    const {errorCard, dialogeTextSpacing} = useStyles();
-    const [attachments, setAttachments] = useState([]);
+    const {errorCard, dialogeTextSpacing, } = useStyles();
     const [open, setOpen] = useState(false);
     const [url, setUrl] = useState("");
     const [label, setLabel] = useState("");
+    const [links, setLinks] = useState([]);
+
+    const preventDefault = event => event.preventDefault();
+
+    const onLinkClick = url => () => {
+        window.open(url);
+    }
+
+    const removeAttachment = attachment => () =>{
+        setLinks(links.filter(link => link !== attachment));
+    }
+
 
     function attachmentAddClicked() {
         //TODO
@@ -29,6 +41,12 @@ export function DeliverableAttachmentCard() {
     const onDeleteAttachmentButtonClick = (id) => () => {
         //TodoRemoval
     }
+
+    const addLink = () => {
+        setLinks([...links, {URL: url, LABEL: label}]);
+        setOpen(false);
+    }
+
 
     return (
         <Card>
@@ -47,26 +65,27 @@ export function DeliverableAttachmentCard() {
                                 <Dialog open={open} onClose={() => setOpen(false)}>
                                     <DialogTitle>New Link Attachment</DialogTitle>
                                     <DialogContent>
-                                        <TextField autoFocus
-                                                   margin="dense"
-                                                   id="url"
-                                                   label="URL"
-                                                   fullWidth
-                                                   className={dialogeTextSpacing}
-                                                    onChange={e=>setUrl(e.target.value)}>
+                                        {/*<Grid container direction="column" spacing={3} className={gridContainer} justify="flex-start" >*/}
+                                                <TextField autoFocus
+                                                           margin="dense"
+                                                           id="url"
+                                                           label="URL"
+                                                           fullWidth
+                                                           className={dialogeTextSpacing}
+                                                           onChange={e => setUrl(e.target.value)}>
 
-                                        </TextField>
-                                        <TextField autoFocus
-                                                   margin="dense"
-                                                   id="label"
-                                                   label="Label"
-                                                   fullWidth
-                                                   onChange={e=>setLabel(e.target.value)}
-                                        />
+                                                </TextField>
+                                                <TextField autoFocus
+                                                           margin="dense"
+                                                           id="label"
+                                                           label="Label"
+                                                           fullWidth
+                                                           onChange={e => setLabel(e.target.value)}
+                                                />
                                     </DialogContent>
                                     <DialogActions>
                                         <Button onClick={e => setOpen(false)}>Cancel</Button>
-                                        <Button>Add Link</Button>
+                                        <Button onClick={addLink}>Add Link</Button>
                                     </DialogActions>
                                 </Dialog>
                             </ButtonGroup>
@@ -74,20 +93,20 @@ export function DeliverableAttachmentCard() {
                     </Grid>
                     <Grid item>
                         <List dense>
-                            {attachments.length > 0 ? attachments.map(file => (
-                                    <Fragment>
-                                        <ListItem>
-                                            <ListItemText>
-                                                {file.label}
-                                            </ListItemText>
-                                            <ListItemSecondaryAction>
-                                                <IconButton edge="end" aria-label="delete"
-                                                            onClick={onDeleteAttachmentButtonClick(file)}>
-                                                    <DeleteIcon color="disabled"/>
-                                                </IconButton>
-                                            </ListItemSecondaryAction>
-                                        </ListItem>
-                                    </Fragment>
+                            {links.length > 0 ? links.map(attachment => (
+                                    <ListItem button key={attachment.LABEL} onClick={onLinkClick(attachment.URL)}>
+                                        <ListItemIcon>
+                                            <AttachmentIcon/>
+                                        </ListItemIcon>
+                                        <ListItemText primary={(
+                                            <Link href={attachment.URL} onClick={preventDefault}>
+                                                {attachment.LABEL}
+                                            </Link>
+                                        )}/>
+                                        <ListItemSecondaryAction>
+                                            <Button onClick={removeAttachment(attachment)}><DeleteIcon color="disabled"/></Button>
+                                        </ListItemSecondaryAction>
+                                    </ListItem>
                                 )
                                 ) :
                                 <div className={errorCard}>
