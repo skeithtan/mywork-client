@@ -15,8 +15,8 @@ import Button from "@material-ui/core/Button";
 import DeleteIcon from '@material-ui/icons/Delete';
 
 
-export function DeleverableAttachmentCard() {
-    const {attachmentCard, errorCard} = useStyles();
+export function DeliverableAttachmentCard() {
+    const {errorCard} = useStyles();
     const [attachments, setAttachments] = useState([])
 
     function attachmentAddClicked() {
@@ -28,7 +28,7 @@ export function DeleverableAttachmentCard() {
     }
 
     return (
-        <Card className={attachmentCard}>
+        <Card>
             <CardContent>
                 <Grid container direction="column">
                     <Grid item container direction="row" justify="space-between">

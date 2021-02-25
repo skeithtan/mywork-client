@@ -1,6 +1,6 @@
 import React from "react";
 import {DeliverableDescriptionCard} from "../DeliverableDescriptionCard";
-import {DeleverableAttachmentCard} from "../DeliverableAttachmentCard"
+import {DeliverableAttachmentCard} from "../DeliverableAttachmentCard"
 import {Button, Grid, Typography} from "@material-ui/core";
 import {useStyles} from "./styles";
 import {connect} from "react-redux";
@@ -19,7 +19,7 @@ export function DeliverableDetailComponent({activeDeliverableSubmission}) {
     return (
         <div className={container}>
             {activeDeliverableSubmission && (
-                <Grid container direction="column" className={cardsContainer} justify="flex-start" wrap="nowrap">
+                <Grid container direction="column" spacing={2} className={cardsContainer} justify="flex-start" wrap="nowrap">
                     <Grid item>
                         <DeliverableDescriptionCard
                             user="student"
@@ -36,7 +36,7 @@ export function DeliverableDetailComponent({activeDeliverableSubmission}) {
                         <DeliverableTeamCard/>
                     </Grid>
                     <Grid item>
-                        <DeleverableAttachmentCard/>
+                        <DeliverableAttachmentCard/>
                     </Grid>
                 </Grid>
             )}

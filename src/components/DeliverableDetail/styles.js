@@ -5,7 +5,8 @@ export const useStyles = makeStyles({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: "100%"
+        height: "100%",
+        paddingTop: 20
     },
     cardsContainer: {
         maxWidth: 1024,

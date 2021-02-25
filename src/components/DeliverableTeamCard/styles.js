@@ -1,14 +1,10 @@
 import {makeStyles} from "@material-ui/core";
 
-export const useStyles= makeStyles(
-    {
-        teamCard:{
-            margin: 20,
-        },
-        nameChip:{
+export const useStyles = makeStyles({
+        nameChip: {
             marginLeft: 10,
         },
-        errorCard:{
+        errorCard: {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",

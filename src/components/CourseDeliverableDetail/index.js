@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {Button, Grid, Typography} from "@material-ui/core";
 import {useStyles} from "./styles";
 import {DeliverableDescriptionCard} from "../DeliverableDescriptionCard";
+import {SubmissionsList} from "../SubmissionsList";
 
 const mapStateToProps = (state, ownProps) => ({
     ...ownProps,
@@ -20,7 +21,7 @@ export function CourseDeliverableDetailComponent(props) {
         <div className={container}>
 
             {activeCourseDeliverable && (
-                <Grid container direction="column" className={cardsContainer} justify="flex-start" wrap="nowrap">
+                <Grid container direction="column" className={cardsContainer} justify="flex-start" alignItems="stretch" wrap="nowrap">
                     <Grid item>
                         <DeliverableDescriptionCard
                             user="professor"
@@ -31,6 +32,9 @@ export function CourseDeliverableDetailComponent(props) {
                                 </Button>
                             )}
                         />
+                    </Grid>
+                    <Grid item>
+                        <SubmissionsList activeCourseDeliverable={activeCourseDeliverable}/>
                     </Grid>
                 </Grid>
             )}

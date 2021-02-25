@@ -3,22 +3,34 @@ import {useStyles} from "./styles";
 import {Button, Card, CardContent, Grid, Typography} from "@material-ui/core";
 import AlarmIcon from '@material-ui/icons/Alarm';
 
+function DescriptionItem({title, children}) {
+    return (
+        <>
+            <Typography variant="overline">{title}</Typography>
+            <Typography variant="body1">
+                {children}
+            </Typography>
+        </>
+    )
+}
+
 export function DeliverableDescriptionCard({deliverable, actions}) {
-    const {deliverableCard, alarmIcon, sendIcon, deadlineText} = useStyles();
+    const {deliverableCard, alarmIcon, deadlineText} = useStyles();
     const {
         name,
         course_name,
         deadline,
         description,
         total_score,
+        is_group_work,
         file_attachments,
-        link_attachments
+        link_attachments,
     } = deliverable;
 
     // TODO: Attachments
 
     return (
-        <Card className={deliverableCard}>
+        <Card>
             <CardContent>
                 <Grid container direction="column" spacing={2}>
                     <Grid item container direction="row" justify="space-between">
@@ -44,15 +56,22 @@ export function DeliverableDescriptionCard({deliverable, actions}) {
                         </Grid>
                         <Grid xs={5} item container direction="column" spacing={2}>
                             <Grid item>
-                                <Typography variant="overline">Deadline</Typography>
-                                <Typography variant="body1" className={deadlineText}>
-                                    <AlarmIcon className={alarmIcon} alignmentBaseline="auto"/>
-                                    {deadline.format("LL")} ({deadline.fromNow()})
-                                </Typography>
+                                <DescriptionItem title="Deadline">
+                                    <div className={deadlineText}>
+                                        <AlarmIcon className={alarmIcon} alignmentBaseline="auto"/>
+                                        {deadline.format("LL")} ({deadline.fromNow()})
+                                    </div>
+                                </DescriptionItem>
                             </Grid>
                             <Grid item>
-                                <Typography variant="overline">Score</Typography>
-                                <Typography variant="body1">{total_score} points</Typography>
+                                <DescriptionItem title="Score">
+                                    {total_score} points
+                                </DescriptionItem>
+                            </Grid>
+                            <Grid item>
+                                <DescriptionItem title="Type">
+                                    {is_group_work ? "Group work" : "Individual work"}
+                                </DescriptionItem>
                             </Grid>
                         </Grid>
                     </Grid>

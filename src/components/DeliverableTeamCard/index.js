@@ -16,7 +16,7 @@ import Button from "@material-ui/core/Button";
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 export function DeliverableTeamCard() {
-    const {teamCard, nameChip, errorCard} = useStyles();
+    const {nameChip, errorCard} = useStyles();
     const [team, newteam] = useState([{name: "saudahmad@epita.fr"}, {name: "saudahmad@epita.fr"}])
 
     const handleDelete = val => () => {
@@ -24,7 +24,7 @@ export function DeliverableTeamCard() {
     }
 
     return (
-        <Card variant="elevation" className={teamCard}>
+        <Card variant="elevation">
             <CardContent>
                 <Grid container direction="column">
                     <Grid item container direction="row" justify="space-between">
