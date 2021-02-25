@@ -1,11 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import {DeliverableDescriptionCard} from "../DeliverableDescriptionCard";
 import {DeliverableAttachmentCard} from "../DeliverableAttachmentCard"
 import {Button, Grid, Typography} from "@material-ui/core";
 import {useStyles} from "./styles";
 import {connect} from "react-redux";
-import {DeliverableTeamCard} from "../DeliverableTeamCard";
 import SendIcon from "@material-ui/icons/Send";
+import {DeliverableTeamCard} from "../DeliverableTeamCard";
+import DoneAllIcon from '@material-ui/icons/DoneAll';
 
 const mapStateToProps = (state, ownProps) => ({
     ...ownProps,
@@ -14,8 +15,40 @@ const mapStateToProps = (state, ownProps) => ({
 
 export const DeliverableDetail = connect(mapStateToProps, null)(DeliverableDetailComponent);
 
+function DescriptionAction({submitState, sendIcon, setSubmitState}) {
+    return (
+        <>
+            {!submitState && (
+                <Button variant="outlined" color="primary" onClick={() => setSubmitState(true)}>
+                    Turn Over And Submit
+                    <SendIcon className={sendIcon}/>
+                </Button>
+            )}
+
+            {submitState && (
+                <Grid container direction="row" alignItems="center" spacing={1}>
+                    <Grid item >
+                        <Typography variant="overline" color="primary">Submitted</Typography>
+                    </Grid>
+                    <Grid item>
+                        <DoneAllIcon fontSize="small" color="primary"/>
+                    </Grid>
+                </Grid>
+
+            )}
+        </>
+    )
+}
+
+
 export function DeliverableDetailComponent({activeDeliverableSubmission}) {
     const {cardsContainer, container, sendIcon} = useStyles();
+    const [submitState, setSubmitState] = useState(false);
+
+    // setSubmitState(false);
+
+    // const submitButtonText =!submitState? "Turn Over and Submit": "Submitted"
+    // const submitButtonIcon =!submitState? <SendIcon className={sendIcon}/>:""
     return (
         <div className={container}>
             {activeDeliverableSubmission && (
@@ -26,10 +59,11 @@ export function DeliverableDetailComponent({activeDeliverableSubmission}) {
                             user="student"
                             deliverable={activeDeliverableSubmission.deliverable}
                             actions={(
-                                <Button variant="outlined" color="primary">
-                                    Turn over and Submit
-                                    <SendIcon className={sendIcon}/>
-                                </Button>
+                                <DescriptionAction
+                                    sendIcon={sendIcon}
+                                    submitState={submitState}
+                                    setSubmitState={setSubmitState}
+                                />
                             )}
                         />
                     </Grid>
