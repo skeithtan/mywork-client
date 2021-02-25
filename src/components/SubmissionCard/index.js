@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
     Button,
     Card,
@@ -46,73 +46,28 @@ function IndividualSubmitterDisplay({submitter}) {
                     {submitter.name}
                 </Typography>
             </Grid>
-           <Grid item>
-               <Typography variant="subtitle1" color="textSecondary">
-                   {submitter.email_address}
-               </Typography>
-           </Grid>
+            <Grid item>
+                <Typography variant="subtitle1" color="textSecondary">
+                    {submitter.email_address}
+                </Typography>
+            </Grid>
 
         </Grid>
     );
 }
 
-export function SubmissionCard() {
+
+export function SubmissionCard({submission}) {
     const {padded, attachmentPadding} = useStyles();
     const onLinkClick = url => () => {
         window.open(url);
     };
 
     const preventDefault = event => event.preventDefault();
-    const {date_submitted, score, feedback, link_attachments} = {
-        "id": 1,
-        "date_submitted": moment(),
-        "score": 20,
-        "feedback": "This is great. The lighting is a little dim, but I appreciate the attention to detail on the cup.",
-        "student_has_seen_feedback": false,
-        "deliverable": 2,
-        "file_attachments": [],
-        "link_attachments": [
-            {
-                url: "https://www.google.com",
-                label: "GitHub Repository of the Project"
-            },
-            {
-                url: "https://www.apple.com",
-                label: "PDF of the repository"
-            }
-        ]
-    }
+    const {submitters, date_submitted, link_attachments} = submission;
+    const [score, setScore] = useState(submission.score);
+    const [feedback, setFeedback] = useState(submission.feedback);
 
-    const submitters = [
-        {
-            "id": 5,
-            "name": "Naresh Kumar Jaiswal",
-            "user_type": "ST",
-            "program": "MSc Software Engineering",
-            "email_address": "naresh.jaiswal@epita.fr"
-        },
-        {
-            "id": 6,
-            "name": "Biswanath Sanatan Shrabani",
-            "user_type": "ST",
-            "program": "MSc Software Engineering",
-            "email_address": "biswanath.shrabani@epita.fr"
-        },
-        {
-            "id": 1,
-            "name": "Samuel Keith Tan",
-            "user_type": "ST",
-            "program": "MSc Software Engineering",
-            "email_address": "skeithtan@gmail.com"
-        },
-        {
-            "id": 4,
-            "name": "Mehdi Laktaf",
-            "user_type": "ST",
-            "program": "MSc Software Engineering",
-            "email_address": "mehdi.laktaf@epita.fr"
-        }
-    ];
 
     return (
         <Card>
