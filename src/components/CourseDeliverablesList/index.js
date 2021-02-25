@@ -1,5 +1,16 @@
 import React, {Fragment, useState} from "react";
-import {Divider, Fab, Grid, List, ListItem, ListSubheader} from "@material-ui/core";
+import {
+    Dialog,
+    DialogActions,
+    DialogContent, DialogContentText,
+    DialogTitle,
+    Divider,
+    Fab, FormControlLabel,
+    Grid,
+    List,
+    ListItem,
+    ListSubheader, Switch, TextField
+} from "@material-ui/core";
 import {SearchBox} from "../SearchBox";
 import {useStyles} from "./styles";
 import {setActiveCourseDeliverable} from "../../state/actions/courseDeliverables";
@@ -8,6 +19,7 @@ import {isSearchMatch} from "../../utils";
 import moment from "moment";
 import {DeliverableListItem} from "../DeliverableListItem";
 import AddIcon from "@material-ui/icons/Add";
+import Button from "@material-ui/core/Button";
 
 const mapStateToProps = (state, ownProps) => ({
     ...ownProps,
@@ -29,6 +41,67 @@ function DeliverableItem({deliverable, onClick, selected}) {
     )
 }
 
+function AddCourseDeliverableDialog({open, setOpen}) {
+
+    return (
+        <div>
+            <Dialog
+                fullWidth
+                onClose={() => setOpen(false)}
+                open={open}>
+                <DialogTitle>New Deliverable</DialogTitle>
+                <DialogContent
+                >
+                    <DialogContentText>
+                        <TextField
+                            label="Title"
+                            fullWidth
+                        ></TextField>
+                    </DialogContentText>
+                    <DialogContentText>
+                        <FormControlLabel label="This is a group work"
+                                          control={<Switch
+                                              checked={false}
+                                              Name/>}/>
+                    </DialogContentText>
+                    <DialogContentText>
+                        <TextField
+                            fullWidth
+                            label="Description"
+                            multiline
+                            rows={4}
+                            variant="filled"
+                        />
+                    </DialogContentText>
+                    <DialogContentText
+                        align="center">
+                        <TextField
+                            fullWidth
+                            id="datetime-local"
+                            label="Deadline"
+                            type="datetime-local"
+                            defaultValue="2021-02-25T10:30"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}/>
+                    </DialogContentText>
+                    <DialogContentText>
+                        <TextField
+                            fullWidth
+                            label="Total Score"
+                        />
+                    </DialogContentText>
+
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setOpen(false)}>Cancel</Button>
+                    <Button color="primary">Create</Button>
+                </DialogActions>
+            </Dialog>
+        </div>
+    )
+}
+
 export function CourseDeliverablesListComponent({
                                                     courseDeliverables,
                                                     setActiveCourseDeliverable,
@@ -36,6 +109,7 @@ export function CourseDeliverablesListComponent({
                                                 }) {
     const {container, searchContainer, listSection, ul, fab} = useStyles();
     const [searchKeyword, setSearchKeyword] = useState("");
+    const [dialogOpen, setDialogOpen] = useState(false);
 
     const query = searchKeyword.trim();
     let displayDeliverables = query.length === 0 ? courseDeliverables :
@@ -98,10 +172,13 @@ export function CourseDeliverablesListComponent({
             </List>
 
             {courseDeliverables && (
-                <Fab color="primary" className={fab}>
+                <Fab color="primary" className={fab} onClick={() => setDialogOpen(true)}>
                     <AddIcon/>
                 </Fab>
             )}
+            {dialogOpen &&
+            <AddCourseDeliverableDialog open={dialogOpen} setOpen={setDialogOpen}/>
+            }
         </Grid>
     )
 }
