@@ -21,7 +21,15 @@ export function CourseDeliverableDetailComponent(props) {
         <div className={container}>
 
             {activeCourseDeliverable && (
-                <Grid container direction="column" className={cardsContainer} justify="flex-start" alignItems="stretch" wrap="nowrap">
+                <Grid
+                    container
+                    spacing={2}
+                    direction="column"
+                    className={cardsContainer}
+                    justify="flex-start"
+                    alignItems="stretch"
+                    wrap="nowrap"
+                >
                     <Grid item>
                         <DeliverableDescriptionCard
                             user="professor"

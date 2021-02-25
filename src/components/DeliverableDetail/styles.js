@@ -6,7 +6,8 @@ export const useStyles = makeStyles({
         alignItems: "center",
         justifyContent: "center",
         height: "100%",
-        paddingTop: 20
+        paddingTop: 24,
+        paddingBottom: 24
     },
     cardsContainer: {
         maxWidth: 1024,

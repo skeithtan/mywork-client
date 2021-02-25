@@ -17,7 +17,7 @@ const mapDispatchToProps = {setCourses, setErrorMessage, setIsLoading};
 export const ProfessorCoursesPage = connect(mapStateToProps, mapDispatchToProps)(ProfessorCoursesPageComponent);
 
 export function ProfessorCoursesPageComponent(props) {
-    const {container, sidebarContainer} = useStyles();
+    const {container, sidebarContainer, detailContainer} = useStyles();
     const {courses, setCourses, isLoading, setIsLoading, setErrorMessage} = props;
 
     const getCourses = () => {
@@ -42,7 +42,7 @@ export function ProfessorCoursesPageComponent(props) {
             <Grid item className={sidebarContainer}>
                 <ProfessorCoursesSidebar getCourses={getCourses}/>
             </Grid>
-            <Grid item xs>
+            <Grid item xs className={detailContainer}>
                 <CourseDeliverableDetail/>
             </Grid>
         </Grid>

@@ -38,7 +38,7 @@ function DeliverablePageComponent(props) {
     }, []);
 
     return (
-        <Grid container className={container} direction="row" alignItems="stretch">
+        <Grid container className={container} direction="row" alignItems="stretch" wrap="nowrap">
             <Grid item className={sidebarContainer}>
                 <DeliverableSidebar getDeliverables={getDeliverables}/>
             </Grid>

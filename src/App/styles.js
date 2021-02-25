@@ -6,5 +6,8 @@ export const useStyles = makeStyles({
     },
     navbarContainer: {
         zIndex: 20
+    },
+    activePageContainer: {
+        overflow: "hidden"
     }
 });

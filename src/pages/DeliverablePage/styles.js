@@ -7,5 +7,5 @@ export const useStyles = makeStyles({
     sidebarContainer: {
         width: 320,
         height: "100%"
-    },
+    }
 });

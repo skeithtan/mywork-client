@@ -8,5 +8,8 @@ export const useStyles = makeStyles({
         width: 320,
         height: "100%"
     },
+    detailContainer: {
+        height: "100%"
+    }
 });
 

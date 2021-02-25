@@ -19,7 +19,8 @@ export function DeliverableDetailComponent({activeDeliverableSubmission}) {
     return (
         <div className={container}>
             {activeDeliverableSubmission && (
-                <Grid container direction="column" spacing={2} className={cardsContainer} justify="flex-start" wrap="nowrap">
+                <Grid container direction="column" spacing={2} className={cardsContainer} justify="flex-start"
+                      wrap="nowrap">
                     <Grid item>
                         <DeliverableDescriptionCard
                             user="student"

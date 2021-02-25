@@ -5,10 +5,13 @@ export const useStyles = makeStyles({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: "100%"
+        height: "100%",
+        overflow: "scroll"
     },
     cardsContainer: {
         maxWidth: 1024,
-        height: "100%"
+        height: "100%",
+        paddingTop: 24,
+        paddingBottom: 200
     },
 });

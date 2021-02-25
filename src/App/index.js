@@ -13,7 +13,7 @@ const mapStateToProps = (state, ownProps) => ({
 export const App = connect(mapStateToProps, null)(AppComponent);
 
 function AppComponent({activePage}) {
-    const {container, navbarContainer} = useStyles();
+    const {container, navbarContainer, activePageContainer} = useStyles();
     const hasNavbar = ![PAGES.SIGN_UP, PAGES.SIGN_IN].includes(activePage);
     const ActivePage = activePage.component;
 
@@ -25,7 +25,7 @@ function AppComponent({activePage}) {
                 </Grid>
             )}
 
-            <Grid item xs>
+            <Grid item xs className={activePageContainer}>
                 <ActivePage/>
             </Grid>
         </Grid>
