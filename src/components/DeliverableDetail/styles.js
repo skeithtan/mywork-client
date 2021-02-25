@@ -6,12 +6,12 @@ export const useStyles = makeStyles({
         alignItems: "center",
         justifyContent: "center",
         height: "100%",
-        paddingTop: 24,
-        paddingBottom: 24
     },
     cardsContainer: {
         maxWidth: 1024,
-        height: "100%"
+        height: "100%",
+        padding: 24,
+        overflow: "scroll"
     },
     sendIcon: {
         fontSize: '1rem',

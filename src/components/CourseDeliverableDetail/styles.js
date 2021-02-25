@@ -11,7 +11,6 @@ export const useStyles = makeStyles({
     cardsContainer: {
         maxWidth: 1024,
         height: "100%",
-        paddingTop: 24,
-        paddingBottom: 200
+        padding: 24,
     },
 });
