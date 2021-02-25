@@ -6,6 +6,9 @@ export const useStyles = makeStyles({
             justifyContent: "center",
             alignItems: "center",
             display: "flex"
+        },
+        dialogeTextSpacing: {
+            marginButton: 50,
         }
     }
 );
