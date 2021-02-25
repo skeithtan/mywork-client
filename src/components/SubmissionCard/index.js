@@ -14,9 +14,12 @@ import {
 } from "@material-ui/core";
 import {useStyles} from "./styles";
 import AttachmentIcon from '@material-ui/icons/Attachment';
+import {onClickEmail} from "../../utils";
 
 function GroupSubmittersDisplay({submitters}) {
     const getLabel = ({name, email_address}) => `${name} (${email_address})`;
+
+
     return (
         <Grid container direction="column" spacing={1}>
             <Grid item>
@@ -28,7 +31,7 @@ function GroupSubmittersDisplay({submitters}) {
                 <Grid container spacing={1}>
                     {submitters.map(submitter => (
                         <Grid item key={submitter.email_address}>
-                            <Chip variant="outlined" label={getLabel(submitter)}/>
+                            <Chip variant="outlined" label={getLabel(submitter)} onClick={onClickEmail(submitter.email_address)}/>
                         </Grid>
                     ))}
                 </Grid>
@@ -46,9 +49,7 @@ function IndividualSubmitterDisplay({submitter}) {
                 </Typography>
             </Grid>
             <Grid item>
-                <Typography variant="subtitle1" color="textSecondary">
-                    {submitter.email_address}
-                </Typography>
+                <Chip variant="outlined" label={submitter.email_address} onClick={onClickEmail(submitter.email_address)}/>
             </Grid>
 
         </Grid>
