@@ -2,18 +2,17 @@ import React, {useState} from "react";
 import {
     Button,
     Card,
-    Chip,
+    Chip, Dialog, DialogActions, DialogContent, DialogTitle,
     Divider,
     Grid,
     Link,
     List,
     ListItem,
     ListItemIcon,
-    ListItemText,
+    ListItemText, Slider, TextField,
     Typography
 } from "@material-ui/core";
 import {useStyles} from "./styles";
-import moment from "moment";
 import AttachmentIcon from '@material-ui/icons/Attachment';
 
 function GroupSubmittersDisplay({submitters}) {
@@ -56,9 +55,91 @@ function IndividualSubmitterDisplay({submitter}) {
     );
 }
 
+function ScoreDialog({oldScore, oldFeedback, setScore, setFeedback, open, setOpen}) {
+    const {sliderPadding} = useStyles();
+    const [tempFeedback, setTempFeedback] = useState(oldFeedback);
+    const [value, setValue] = useState(oldScore);
+
+    function valuetext(value) {
+        return value;
+    }
+
+    const marks = [
+        {
+            value: 0,
+            label: 0
+        },
+        {
+            value: 5,
+            label: 5
+        },
+        {
+            value: 10,
+            label: 10
+        }, {
+            value: 15,
+            label: 15
+        }, {
+            value: 20,
+            label: 20
+        }
+    ]
+
+    const handleScoreSubmit = () => {
+        setScore(value);
+        console.log("New feedback", tempFeedback, tempFeedback.length);
+        setFeedback(tempFeedback);
+        setOpen(false);
+    }
+
+    const onChangeFeedback = (event) => {
+        setTempFeedback(event.target.value);
+    };
+
+    return (
+        <Dialog
+            fullWidth
+            open={open}
+            onClose={() => setOpen(false)}
+            aria-labelledby="responsive-dialog-title">
+            <DialogTitle>Score and feedback</DialogTitle>
+            <DialogContent>
+                <Typography gutterBottom>
+                    Score
+                </Typography>
+                <Slider defaultValue={10}
+                        getAriaValueText={valuetext}
+                        aria-labelledby="discrete-slider-always"
+                        value={typeof value === 'number' ? value : 0}
+                        valueLabelDisplay="auto"
+                        className={sliderPadding}
+                        step={1}
+                        marks={marks}
+                        min={0}
+                        max={20}
+                        onChange={(event, newValue) => setValue(newValue)}/>
+                <TextField
+                    variant="filled"
+                    multiline
+                    rows={4}
+                    value={tempFeedback}
+                    fullWidth
+                    label="Feedback"
+                    onChange={onChangeFeedback}
+                />
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={() => setOpen(false)}>Cancel</Button>
+                <Button color="primary" onClick={handleScoreSubmit}>Submit</Button>
+            </DialogActions>
+        </Dialog>
+    )
+
+}
+
 
 export function SubmissionCard({submission}) {
-    const {padded, attachmentPadding} = useStyles();
+    const {padded, attachmentPadding } = useStyles();
     const onLinkClick = url => () => {
         window.open(url);
     };
@@ -67,7 +148,7 @@ export function SubmissionCard({submission}) {
     const {submitters, date_submitted, link_attachments} = submission;
     const [score, setScore] = useState(submission.score);
     const [feedback, setFeedback] = useState(submission.feedback);
-
+    const [open, setOpen] = useState(false);
 
     return (
         <Card>
@@ -137,9 +218,18 @@ export function SubmissionCard({submission}) {
                     </Grid>
                 </Grid>
                 <Grid item className={padded}>
-                    <Button variant="outlined" color="primary" size="small">
+                    <Button variant="outlined" color="primary" size="small" onClick={() => setOpen(true)}>
                         Set score and feedback
                     </Button>
+
+                    <ScoreDialog
+                        oldScore={score === null ? 0 : score}
+                        oldFeedback={feedback}
+                        setFeedback={setFeedback}
+                        setScore={setScore}
+                        open={open}
+                        setOpen={setOpen}
+                    />
                 </Grid>
             </Grid>
         </Card>

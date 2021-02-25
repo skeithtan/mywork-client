@@ -6,5 +6,11 @@ export const useStyles = makeStyles({
     },
     attachmentPadding: {
         padding: "16px 16px 0px 16px"
+    },
+    dialogContainer:{
+        width: 300,
+    },
+    sliderPadding:{
+      marginBottom:56
     }
 });
