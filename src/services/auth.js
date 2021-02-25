@@ -8,7 +8,7 @@ export function signIn(email, password) {
 
 export function fetchProfile() {
     return makeAxios()
-        .get("/profile")
+        .get("/profile/")
         .then(dataFromResponse);
 }
 
