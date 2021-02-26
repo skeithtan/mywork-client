@@ -42,7 +42,10 @@ function DeliverableItem({deliverable, onClick, selected}) {
 }
 
 function AddCourseDeliverableDialog({open, setOpen}) {
-
+    const [groupWorkChecker, setGroupWorkChecker] = useState("");
+    const handleCheckerchange= () => {
+        setGroupWorkChecker( !groupWorkChecker)
+    }
     return (
         <div>
             <Dialog
@@ -61,7 +64,8 @@ function AddCourseDeliverableDialog({open, setOpen}) {
                     <DialogContentText>
                         <FormControlLabel label="This is a group work"
                                           control={<Switch
-                                              checked={false}
+                                              onChange={handleCheckerchange}
+                                              checked={groupWorkChecker}
                                               Name/>}/>
                     </DialogContentText>
                     <DialogContentText>
