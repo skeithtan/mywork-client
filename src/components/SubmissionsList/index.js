@@ -28,7 +28,7 @@ function generateData({name}) {
                     },
                 ],
                 "id": 1,
-                "date_submitted": moment(),
+                "date_submitted": moment("2017-05-26T08:27"),
                 "score": 20,
                 "feedback": "This is great. The lighting is a little dim, but I appreciate the attention to detail on the cup.",
                 "link_attachments": [
@@ -60,7 +60,7 @@ function generateData({name}) {
                         "email_address": "mehdi.laktaf@epita.fr"
                     }
                 ],
-                date_submitted: moment(),
+                date_submitted: moment("2017-05-26T09:13"),
                 score: null,
                 feedback: "",
                 link_attachments: [
@@ -108,10 +108,15 @@ function generateData({name}) {
                         email_address: "lin.an@epita.fr"
                     }
                 ],
-                date_submitted: moment(),
+                date_submitted: moment("2017-05-26T13:11"),
                 score: null,
                 feedback: "",
-                link_attachments: []
+                link_attachments: [
+                    {
+                        url: "https://github.com/kickstarter/kickstarter-autodesk-3d",
+                        label: "Git files"
+                    }
+                ]
             }
         ]
     }

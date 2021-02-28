@@ -25,10 +25,12 @@ export function DeliverableTeamCard() {
     }
 
     const onAddTeammate = () => {
-        const email_address = prompt("Enter the email address of your teammate").toLowerCase();
+        let email_address = prompt("Enter the email address of your teammate");
         if (!email_address) {
             return;
         }
+
+        email_address = email_address.toLowerCase();
 
         const newTeammate = {
             "id": 6,
@@ -38,12 +40,14 @@ export function DeliverableTeamCard() {
             email_address
         }
 
-        if (email_address.includes("mehdi")) {
+
+
+        if (email_address.includes("mehdi") || email_address.includes("medhi")) {
             newTeammate.name = "Mehdi Laktaf"
         }
 
-        if (email_address.includes("saud")) {
-            newTeammate.name = "Saud Ahmad";
+        if (email_address.includes("keith")) {
+            newTeammate.name = "Samuel Keith Tan";
         }
 
         if (email_address.includes("shrabani")) {
